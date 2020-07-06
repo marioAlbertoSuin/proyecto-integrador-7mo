@@ -6,25 +6,27 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const passport = require('passport');
-const hbs = require('hbs')
+const bodyParser = require('body-parser');
+
 
 // Initializations y base
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/BDproyec', { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true }, (err, res) => {
+mongoose.connect('mongodb+srv://msuin:Elcijote99@cluster0.xpsal.mongodb.net/BDproyec', { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true }, (err, res) => {
     if (err) throw err;
     console.log('base online');
 
 
 })
 require('./config/passport');
+ 
 
 
 
 
 // settings
 
-app.set('port', process.env.PORT || 4000);
+app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'))
 app.engine('.hbs', exphbs({
 
@@ -35,7 +37,10 @@ app.engine('.hbs', exphbs({
 }));
 app.set('view engine', '.hbs');
 // middlewares
+app.use(bodyParser.urlencoded({ extended: false }))
 
+// parse application/json
+app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(session({
