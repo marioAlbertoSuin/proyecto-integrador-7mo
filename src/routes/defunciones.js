@@ -8,11 +8,21 @@ const passport = require('passport');
 
 
 // GRAFICAS DEFUNCIONES
-router.get('/defun/graficas', (req, res) => {
-    res.render('defunciones/graficas-defunciones');
+
+router.get('/defunciones/generarGraficas/:parametros',isAuthenticated ,(req, res) => {
+    let parametros=req.params.parametros;
+    
+    res.render('defunciones/graficas-defunciones',{parametros});
+});
+
+router.get('/defun/graficas',isAuthenticated ,(req, res) => {
+    res.render('defunciones/menu-defunciones');
+    //res.render('defunciones/graficas-defunciones');
 });
 
 router.post('/defun/datos/graficas', async(req, res) => {
+    let parametro=req.body.parametro;
+    console.log(parametro);
     let datoGrafica=req.body.datoGrafica ;
     if (datoGrafica == 1) {
         const defuncion = await defunciones.aggregate([{$group:{_id:'$mes_fall',total:{$sum:1}}}]);
@@ -41,56 +51,105 @@ router.post('/defun/datos/graficas', async(req, res) => {
 
 
 
-router.get('/defunciones/registro', (req, res) => {
+router.get('/defunciones/registro',isAuthenticated ,async(req, res) => {
+   
     res.render('defunciones/defunciones-signup');
-})
+});
 
-router.post('/defunciones/registro', async(req, res) => {
+router.post('/defunciones/registro', isAuthenticated,async(req, res) => {
+    var codEntidad=String(req.user._id);
+    
     let errors = [];
-    const { name, residencia, email, password, confirm_password } = req.body;
-    res.send(name)
-   /* if (password != confirm_password) {
-        errors.push({ text: "Passwords do not match." });
+    var { sexo, sem_gest, fecha_fall, p_emb, asis_por , lugar_ocur ,prov_fall ,cant_fall,
+        parr_fall ,area_fall ,causa_fetal, nac_mad ,nom_pais, fecha_mad , hij_viv ,hij_vivm ,
+        hij_nacm ,con_pren ,etnia ,est_civil, niv_inst ,sabe_leer ,prov_res ,cant_res ,parr_res ,area_res
+    }  = req.body; 
+    
+
+   
+    if(fecha_mad==""){
+        errors.push({text:"Escoja la fecha del nacimiento de la madre"});
+    }else{
+        
+        var hoy = new Date();
+        var cumpleanos = new Date(fecha_mad);
+        var edad_mad = hoy.getFullYear() - cumpleanos.getFullYear();
+        
     }
-    if (name.length < 1) {
-        errors.push({ text: "Ingrese un nombre." });
+    if(fecha_fall==""){
+        errors.push({text:"Escoja la fecha de la defuncion"});
     }
-    if(email.length<3){
-        errors.push({ text: "Ingrese un email." });
+
+    if (causa_fetal.length < 10) {
+        errors.push({ text: "Ingrese una causa fetal." });
     }
-    if (residencia.length < 1) {
-        errors.push({ text: "Ingrese una residencia." });
+    if(nom_pais.length<4){
+        errors.push({ text: "Ingrese un pais." });
     }
-    if (password.length < 4) {
-        errors.push({ text: "La contraseña debe ser mayor a 4 caracteres." });
-    }
+    if (prov_fall=='--') {
+        errors.push({ text: "Escoja una opcion valida para la provincia del falleciminto." });
+    } 
+    if (cant_fall=='--') {
+        errors.push({ text: "Escoja una opcion valida para el canton del falleciminto." });
+    } 
+    if (prov_res=='--') {
+        errors.push({ text: "Escoja una opcion valida para la provincia de residencia." });
+    } 
+    if (cant_res=='--') {
+        errors.push({ text: "Escoja una opcion valida para el canton de residencia." });
+    } 
     if (errors.length > 0) {
-        res.render("users/signup", {
+        res.render("defunciones/defunciones-signup", {
             errors,
-            name,
-            email,
-            password,
-            confirm_password,
-            residencia
+
         });
-    } else {
-        // Look for email coincidence
-        const emailUser = await User.findOne({ email: email });
-        if (emailUser) {
-            req.flash("error_msg", "El email ya esta en uso.");
-            res.redirect("/usuario/registro");
-        } else {
-            // Saving a New User
-            const newUser = new User({ name, email, password, residencia });
-            newUser.password = await newUser.encryptPassword(password);
-            await newUser.save();
+    } 
+    else {
+      
+        
+        var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+       var fechaFallecimiento = new Date(fecha_fall.replace(/-/g, '\/'))
+       var dia_fall = fechaFallecimiento.getDate();
+       var mes_fall = meses[fechaFallecimiento.getMonth()];
+       var anio_fall = fechaFallecimiento.getFullYear();
+       sem_gest = parseInt(sem_gest);
+       hij_viv= parseInt(hij_viv);
+       hij_vivm= parseInt(hij_vivm);
+       hij_nacm=parseInt(hij_nacm);
+       con_pren=parseInt(con_pren);
+       
+        const defuncion = new defunciones({ sexo, sem_gest, fecha_fall, p_emb, asis_por , lugar_ocur ,prov_fall ,cant_fall,
+            parr_fall ,area_fall ,causa_fetal, nac_mad ,nom_pais, fecha_mad , hij_viv ,hij_vivm ,
+            hij_nacm ,con_pren ,etnia ,est_civil, niv_inst ,sabe_leer ,prov_res ,cant_res ,parr_res ,area_res,dia_fall,mes_fall,anio_fall,edad_mad,codEntidad});
+         
+            await defuncion.save();
             req.flash("success_msg", "estas registrado.");
-            res.redirect("/usuario/login");
+            res.redirect("/usuario/login/succes");
         }
-    }*/
+    
 });
 
 
+router.post('/defunciones/registro/llenar-canton', async(req, res) => {
+    let datoCanton=req.body.datoCanton ;
+    
+    const parroquias = await defunciones.aggregate([
+        {$match:{prov_fall:datoCanton}},
+        {$group:{_id:'$cant_insc'}}
+        ]);
+    res.send(parroquias);
+    
+});
 
+router.post('/defunciones/registro/llenar-parroquia', async(req, res) => {
+    let datoParroquia=req.body.datoParroquia ;
+    
+    const parroquias = await defunciones.aggregate([
+        {$match:{cant_insc:datoParroquia}},
+        {$group:{_id:'$parr_fall'}}
+        ]);
+    res.send(parroquias);
+    
+});
 
 module.exports = router

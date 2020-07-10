@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const Entidad =require('../models/Entidad');
 const defunciones =require('../models/Defuncion');
 const { isAuthenticated } = require('../helpers/auth');
 
@@ -33,7 +32,7 @@ router.delete('/user/delete/:id', isAuthenticated, async(req, res) => {
 
 
 router.get('/admin/entidadAll', isAuthenticated, async(req, res) => {
-    const usuarios = await Entidad.find({ role: "Entidad" }).lean().sort({ date: "desc" });
+    const usuarios = await User.find({ role: "Entidad" }).lean().sort({ date: "desc" });
 
     res.render("admin/all-entidades", {
         user: req.user.name,

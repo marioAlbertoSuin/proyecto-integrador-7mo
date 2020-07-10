@@ -1,3 +1,6 @@
+<br>
+<br>
+<br>
 <div class="row">
   <div class="col-md-7 mx-auto">
     <div class="card">
@@ -5,91 +8,266 @@
         Registro de defuncion
       </div>
       <div class="card-body">
-        <form action="/usuario/registro" method="POST">
+        <form action="/defunciones/registro" method="POST">
         <h1>Datos de la defuncion</h1>
           <div class="form-group">
               <label >Sexo</label>
-            <select name="select-sexo">
+            <select name="sexo">
                 <option value="Mujer">Mujer</option> 
                 <option value="Hombre" selected>Hombre</option>
             
             </select>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" name="residencia" placeholder="Periodo de gestación" >
+            <input type="number" class="form-control" name="sem_gest" placeholder="Periodo de gestación" >
           </div>
           <div class="form-group">
-            <input type="email" class="form-control" name="" placeholder="fecha de ocurrencia" >
+
+            <label for="start">fecha de fallecimiento:</label>
+            <input type="date" name="fecha_fall">
+          
+ 
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" name="" placeholder="Producto del enbarazo" >
+            
+            
+            <label >Producto del enbarazo</label>
+            <select name="p-emb">
+            <option value="Simple">Simple</option> 
+            <option value="Doble" >Doble</option>
+            <option value="Triple" >Triple</option>
+            <option value="Cuádruple ó más" >Cuádruple ó más</option>
+            </select>
+
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="Asistido por :" >
+            
+
+            <label >Asistido por :</label>
+            <select name="asis-por">
+            <option value="Médico/a">Médico/a</option> 
+            <option value="Obstetriz/Obstetra" >Obstetriz/Obstetra</option>
+            <option value="Médico Legista" >Médico Legista</option>
+            <option value="Partero/a no calilficado/a" >Partero/a no calilficado/a</option>
+            <option value="Otro" >Otro</option>
+            </select>
+
+
+            
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="lugar de ocurrencia" >
+           
+            <label >lugar de ocurrencia :</label>
+            <select name="lugar_ocur">
+            <option value="Hospital, Clínica o Consultorio Privado">Hospital, Clínica o Consultorio Privado</option> 
+            <option value="Establecimiento del Ministerio de Salud" >Establecimiento del Ministerio de Salud</option>
+            <option value="Establecimiento de la Junta de Beneficencia" >Establecimiento de la Junta de Beneficencia</option>
+            <option value="Establecimiento del IESS" >Establecimiento del IESS</option>
+            <option value="Otro Establecimiento Público" >Otro Establecimiento Público</option>
+            <option value="Casa" >Casa</option>
+            <option value="Otro" >Otro</option>
+            
+            </select>
+
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="provincia del falecimiento" >
+          <div class="form-group">
+            <label >provincia del falecimiento</label>
+            <select name="prov_fall" onchange="cambia()" id="provFall">
+               <option value="--">--</option>
+              <option value="Galápagos">Galápagos</option>
+              <option value="Zamora Chinchipe">Zamora Chinchipe</option>
+              <option value="Morona Santiago">Morona Santiago</option>
+              <option value="Azuay">Azuay</option>
+              <option value="Napo">Napo</option>
+              <option value="Sucumbíos">Sucumbíos</option>
+              <option value="Cańar">Cańar</option>
+              <option value="Cotopaxi">Cotopaxi</option>
+              <option value="Guayas">Guayas</option>
+              <option value="Imbabura">Imbabura</option>
+              <option value="El Oro">El Oro</option>
+              <option value="Bolívar">Bolívar</option>
+              <option value="Loja">Loja</option>
+              <option value="Pichincha">Pichincha</option>
+              <option value="Santa Elena">Santa Elena</option>
+              <option value="Orellana">Orellana</option>
+              <option value="Chimborazo">Chimborazo</option>
+              <option value="Esmeraldas">Esmeraldas</option>
+              <option value="Santo Domingo de los Tsáchilas">Santo Domingo de los Tsáchilas</option>
+              <option value="Tungurahua">Tungurahua</option>
+              <option value="Los Ríos">Los Ríos</option>
+              <option value="Pastaza">Pastaza</option>
+              <option value="Carchi">Carchi</option>
+              <option value="Manabí">Manabí</option>
+              
+
+            </select>
+            
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="Canton del fallecimiento" >
+          <div class="form-group">
+            <label>Canton del fallecimiento</label>
+            <select name="cant_fall" id="cantFall" onchange="cambia2()">
+              <option value="--">--</option>
+            </select>
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="parroquia del fallecimiento" >
+          <div class="form-group">
+            <label>parroquia del fallecimiento</label>
+            <select name="parr_fall" id="parrFall">
+             
+            </select>
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="area del fallecimiento" >
+          <div class="form-group">
+            
+            <label >Area del fallecimiento</label>
+            <select name="area_fall">
+                <option value="Rural">Rural</option> 
+                <option value="Urbana" selected>Urbana</option>
+            
+            </select>
+
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="Causa que ocasiono la defuncion fetal" >
+          <div class="form-group">
+            <input type="text" class="form-control" name="causa_fetal" placeholder="Causa que ocasiono la defuncion fetal" >
           </div>
           <h1>Datos de la madre</h1>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="Nacionalidad de la madre" >
+          <div class="form-group">
+            <label >Nacionalidad de la madre</label>
+            <select name="nac_mad" >
+              <option value="Extranjera">Extranjera</option>
+              <option value="Ecuatoriana">Ecuatoriana</option>
+            </select>
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="Nombe del pais" >
+          <div class="form-group">
+            <input type="text" class="form-control" name="nom_pais" placeholder="Nombe del pais" >
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="Fecha de nacimiento" >
+
+
+          <div class="form-group">
+             
+              <label for="start">Fecha de nacimiento :</label>
+              <input type="date" id="start" name="fecha_mad"
+            value="2020-07-00"
+            min="1970-01-01" max="2040-12-31">
+
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="Edad" >
+
+          <div class="form-group">
+            <input type="number" class="form-control" name="hij_viv" placeholder="Cantidad hijos vivos" >
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="Cantidad hijos vivos" >
+          <div class="form-group">
+            <input type="number" class="form-control" name="hij_vivm" placeholder="cuantos hijos que nacieron vivos han muerto" >
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="cuantos hijos que nacieron vivos han muerto" >
+          <div class="form-group">
+            <input type="number" class="form-control" name="hij_nacm" placeholder="Cuantos hijos nacieron muertos" >
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="Cuentos hijos nacieron muertos" >
+          <div class="form-group">
+            <input type="number" class="form-control" name="con_pren" placeholder="Cuantos controles prenatales realizo en este enbarazo" >
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="Cuantos controles prenatales realizo en este enbarazo" >
+          <div class="form-group">
+            <label>Etnia de la madre</label>
+                <select name="etnia">
+                <option value="Rural">Montubia</option> 
+                <option value="Urbana" >Montubia</option>
+                <option value="Urbana" >Mulata</option>
+                <option value="Urbana" >Afroecuatoriana/Afrodescendiente</option>
+                <option value="Urbana" >Negra</option>
+                <option value="Urbana" >Mestiza</option>
+                <option value="Urbana" >Indígena</option>
+                <option value="Urbana" >Blanca</option>
+                <option value="Urbana" >Otra</option>
+            
+            </select>
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="etnia de la madre" >
+          <div class="form-group">
+                <label>Estado civil</label>
+                <select name="est_civil">
+                <option value="Viuda">Viuda</option> 
+                <option value="Separada" >Separada</option>
+                <option value="Divorciada" >Divorciada</option>
+                <option value="Unión de hecho" > Unión de hecho</option>
+                <option value="Soltera" >Soltera</option>
+                <option value="Unida" >Unida</option>
+                <option value="Casada" >Casada</option>
+                <option value="Sin información" >Sin información</option>
+            
+            
+            </select>
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="Estado civil" >
+          <div class="form-group">
+                 <label>Sabe leer </label>
+                <select name="sabe_leer">
+                <option value="Si">Si</option> 
+                <option value="No">No</option> 
+                </select>
+
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="sabe leer y escribir " >
+          <div class="form-group">
+            <label> Nivel de Instrucion</label>
+            <select name="niv_inst" >
+              <option value="Ninguno">Ninguno</option>
+              <option value="Superior universitario">Superior universitario</option>
+              <option value="Educación Básica">Educación Básica</option>
+              <option value="Centro de alfabetización">Centro de alfabetización</option>
+              <option value="Superior">Superior</option>
+              <option value="Ciclo Post-Bachillerato">Ciclo Post-Bachillerato</option>
+              <option value="Secundaria">Secundaria</option>
+              <option value="Posgrado">Posgrado</option>
+              <option value="Educación Media / Bachillerato">Educación Media / Bachillerato</option>
+              <option value="Superior no universitario">Superior no universitario</option>
+              <option value="Primaria">Primaria</option>
+              <option value="Postgrado">Postgrado</option>
+              <option value="Sin información">Sin información</option>
+            </select>
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="provincia de residencia" >
+
+          <div class="form-group">
+            <label>Prpvincia de residencia</label>
+            <select name="prov_res" id="provRes" onchange="cambio()">
+              <option value="--">--</option>
+              <option value="Galápagos">Galápagos</option>
+              <option value="Zamora Chinchipe">Zamora Chinchipe</option>
+              <option value="Morona Santiago">Morona Santiago</option>
+              <option value="Azuay">Azuay</option>
+              <option value="Napo">Napo</option>
+              <option value="Sucumbíos">Sucumbíos</option>
+              <option value="Cańar">Cańar</option>
+              <option value="Cotopaxi">Cotopaxi</option>
+              <option value="Guayas">Guayas</option>
+              <option value="Imbabura">Imbabura</option>
+              <option value="El Oro">El Oro</option>
+              <option value="Bolívar">Bolívar</option>
+              <option value="Loja">Loja</option>
+              <option value="Pichincha">Pichincha</option>
+              <option value="Santa Elena">Santa Elena</option>
+              <option value="Orellana">Orellana</option>
+              <option value="Chimborazo">Chimborazo</option>
+              <option value="Esmeraldas">Esmeraldas</option>
+              <option value="Santo Domingo de los Tsáchilas">Santo Domingo de los Tsáchilas</option>
+              <option value="Tungurahua">Tungurahua</option>
+              <option value="Los Ríos">Los Ríos</option>
+              <option value="Pastaza">Pastaza</option>
+              <option value="Carchi">Carchi</option>
+              <option value="Manabí">Manabí</option>
+            </select>
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="canton de residencia" >
+          <div class="form-group">
+             <label >Canton de residencia</label>
+             <select name="cant_res" id="cantRes" onchange="cambio2()">
+               <option value="--">--</option>
+             </select>
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="parroquia de residencia" >
+          <div class="form-group">
+            <label >parroquia de residencia</label>
+             <select name="parr_res" id="parrRes">
+
+             </select>
           </div>
-                    <div class="form-group">
-            <input type="password" class="form-control" name="confirm_password" placeholder="area de residencia abitual" >
+          <div class="form-group">
+            
+              <label >Area de residencia abitual</label>
+              <select name="area_res" >
+                <option value="Rural">Rural</option>
+                <option value="Urbana">Urbana</option>
+              </select>
+
           <button class="btn btn-primary btn-block">
             Signup 
           </button>
@@ -98,3 +276,5 @@
     </div>
   </div>
 </div>
+<script src="/js/cargarSelect.js"></script>
+<script src = "https://code.jquery.com/jquery-3.4.1.min.js" integridad = "sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo =" crossorigin = "anónimo" > </cript>

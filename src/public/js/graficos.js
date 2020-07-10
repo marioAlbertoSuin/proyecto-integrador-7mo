@@ -2,10 +2,10 @@
 
 function cargarGrafica() {
     let activoFijo = $('input[name="graficaActual"]:checked').val();
-    
+    let parametro = document.getElementById('parametros').value;
     $.ajax({
         url: '/defun/datos/graficas',
-        data: {datoGrafica:activoFijo},
+        data: {datoGrafica:activoFijo,parametro:parametro},
         type: 'POST',
 
         success: function(response) {

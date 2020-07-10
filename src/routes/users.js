@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const Entidad =require('../models/Entidad');
 const passport = require('passport');
 const { isAuthenticated } = require('../helpers/auth');
 
@@ -21,11 +20,12 @@ router.get('/usuario/login/succes', isAuthenticated, (req, res) => {
     if (req.user.role == "Admin") {
         res.render("admin/admin-menu",{user:req.user.name});
     }else if(req.user.role=='User') {
-        res.render("/users/user-menu",{user:req.user.name});
+        res.render("users/user-menu",{user:req.user.name});
     }else{
-        res.render("/users/entidades-menu",{user:req.user.name});
+        res.render("users/entidades-menu",{user:req.user.name});
     }
 })
+
 
 
 
@@ -125,13 +125,13 @@ router.post('/entidad/registro', isAuthenticated,  async(req, res) => {
         });
     } else {
         // Look for email coincidence
-        const emailUser = await Entidad.findOne({ email: email });
+        const emailUser = await User.findOne({ email: email });
         if (emailUser) {
             req.flash("error_msg", "El email ya esta en uso.");
             res.redirect("/entidad/registro");
         } else {
             // Saving a New User
-            const newUser = new Entidad({ name, email, password, residencia });
+            const newUser = new User({ name, email, password, residencia,role:'Entidad' });
             newUser.password = await newUser.encryptPassword(password);
             await newUser.save();
             req.flash("success_msg", "esta registrado.");
