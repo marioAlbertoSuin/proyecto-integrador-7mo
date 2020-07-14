@@ -2,23 +2,122 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
-    
+ 
+        <div class="jumbotron">
+        <img class="mr-3" src="/img/grafica1.png" alt="" width="48" height="48">
+       <h1>Graficas refrentes a las defunciones fetales</h1>
+      </div>
      <input type="hidden" id="parametros" value="{{parametros}}">
-   <input type="radio" name="graficaActual" value=1 autofocus> MES<br>
-   <input type="radio" name="graficaActual" value=2> ETNIA<br>
-   <input type="radio" name="graficaActual" value=3> EDAD DE LA MADRE<br>
-   <input type="radio" name="graficaActual" value=4> AREA DE FALLECIMIENTO<br>  
-   <input type="radio" name="graficaActual" value=5> NACINALIDAD DE LA MADRE<br>
+
+    <table
+      ><tr>
+        <td>
+          <font style="vertical-align: inherit;">Tiempo</font><br>
+          <font style="vertical-align: inherit;">Año</font>
+          <select  id="año">
+            <option value=2016>2016</option>
+            <option value=2017>2017</option>
+          </select>
+          <font style="vertical-align: inherit;">Mes</font>
+          <select  id="mes">
+            <option value="Enero">Enero</option>
+            <option value="Febrero">Febrero</option>
+            <option value="Marzo">Marzo</option>
+            <option value="Abril">Abril</option>
+            <option value="Mayo">Mayo</option>
+            <option value="Junio">Junio</option>
+            <option value="Julio">Julio</option>
+            <option value="Agosto">Agosto</option>
+            <option value="Septiembre">Septiembre</option>
+            <option value="Octubre">Octubre</option>
+            <option value="Noviembre">Noviembre</option>
+            <option value="Diciembre">Diciembre</option>
+
+          </select>
+        </td>
+
+        <td>
+          <font style="vertical-align: inherit;">Geografia</font><br>
+          <font style="vertical-align: inherit;">provincia</font>
+            <select name="prov_fall" onchange="cambia()" id="provFall">
+               <option value="--">--</option>
+              <option value="Galápagos">Galápagos</option>
+              <option value="Zamora Chinchipe">Zamora Chinchipe</option>
+              <option value="Morona Santiago">Morona Santiago</option>
+              <option value="Azuay">Azuay</option>
+              <option value="Napo">Napo</option>
+              <option value="Sucumbíos">Sucumbíos</option>
+              <option value="Cańar">Cańar</option>
+              <option value="Cotopaxi">Cotopaxi</option>
+              <option value="Guayas">Guayas</option>
+              <option value="Imbabura">Imbabura</option>
+              <option value="El Oro">El Oro</option>
+              <option value="Bolívar">Bolívar</option>
+              <option value="Loja">Loja</option>
+              <option value="Pichincha">Pichincha</option>
+              <option value="Santa Elena">Santa Elena</option>
+              <option value="Orellana">Orellana</option>
+              <option value="Chimborazo">Chimborazo</option>
+              <option value="Esmeraldas">Esmeraldas</option>
+              <option value="Santo Domingo de los Tsáchilas">Santo Domingo de los Tsáchilas</option>
+              <option value="Tungurahua">Tungurahua</option>
+              <option value="Los Ríos">Los Ríos</option>
+              <option value="Pastaza">Pastaza</option>
+              <option value="Carchi">Carchi</option>
+              <option value="Manabí">Manabí</option>
+              
+
+            </select>
+            
+       
+         
+             <font style="vertical-align: inherit;">Canton</font>  
+            <select name="cant_fall" id="cantFall" >
+              <option value="--">--</option>
+            </select>
+         
+
+          
+        </td>
+        <td>
+          <input type="button" id="boton" value="Generar grafica" class="btn btn-primary btn-lg" onclick="cargarGrafica()">
+        </td>
+      </tr>
+    </table>
 
 
 
-<input type="button" id="boton" value="Generar grafica" class="btn btn-primary btn-lg" onclick="cargarGrafica()">
-<figure class="highcharts-figure">
-    <div id="container"></div>
 
-</figure>
+<div class="row mb-2y">
+
+   <div class="col-md-6">
+     <figure class="highcharts-figure">
+      <div id="container"></div>
+    </figure>
+  </div>
+
+     <div class="col-md-6">
+     <figure class="highcharts-figure">
+      <div id="container3"></div>
+    </figure>
+  </div>
+
+   
+     <div class="col-md-6">
+     <figure class="highcharts-figure">
+      <div id="container2"></div>
+    </figure>
+  </div>
+    
+     <div class="col-md-6">
+     <figure class="highcharts-figure">
+      <div id="container4"></div>
+    </figure>
+  </div>
+</div>
+
 <script src="/js/graficos.js"></script>
+<script src="/js/cargarSelect.js"></script>
 <script src = "https://code.jquery.com/jquery-3.4.1.min.js" integridad = "sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo =" crossorigin = "anónimo" > </cript>
 
 

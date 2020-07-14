@@ -6,8 +6,9 @@ const { isAuthenticated } = require('../helpers/auth');
 const passport = require('passport');
 
 
-
+//****************************************************************************
 // GRAFICAS DEFUNCIONES
+//****************************************************************************
 
 router.get('/defunciones/generarGraficas/:parametros',isAuthenticated ,(req, res) => {
     let parametros=req.params.parametros;
@@ -21,34 +22,28 @@ router.get('/defun/graficas',isAuthenticated ,(req, res) => {
 });
 
 router.post('/defun/datos/graficas', async(req, res) => {
-    let parametro=req.body.parametro;
-    console.log(parametro);
-    let datoGrafica=req.body.datoGrafica ;
-    if (datoGrafica == 1) {
-        const defuncion = await defunciones.aggregate([{$group:{_id:'$mes_fall',total:{$sum:1}}}]);
-        res.send(defuncion);
-    }else if (datoGrafica == 2) {
-        const defuncion = await defunciones.aggregate([{$group:{_id:'$etnia',total:{$sum:1}}}]);
-        res.send(defuncion);  
-    }else if (datoGrafica == 3) {
-        const defuncion = await defunciones.aggregate([{$group:{_id:'$edad_mad',total:{$sum:1}}}]).sort({edad_mad:"desc"});
-        res.send(defuncion);
-    }else if (datoGrafica == 4) {
-        const defuncion = await defunciones.aggregate([{$group:{_id:'$area_fall',total:{$sum:1}}}]);
-        res.send(defuncion);
-    }else if (datoGrafica == 5) {
-        const defuncion = await defunciones.aggregate([{$group:{_id:'$nom_pais',total:{$sum:1}}}]);
-        res.send(defuncion);
-    }else{
-        res.send("falso");
-        
-    }
-  
+    let {           
+        parametro,
+        año_fall,
+        mes_fall,
+        provFall,
+        cantFall}=req.body;
+    
+    
+    
+    const año = await defunciones.aggregate([{$match:{"anio_fall":parseInt(año_fall)}},{$group:{_id:`$${parametro}`,total:{$sum:1}}}]);
+    const mes = await defunciones.aggregate([{$match:{"mes_fall":mes_fall}},{$group:{_id:`$${parametro}`,total:{$sum:1}}}]);
+    const provincia = await defunciones.aggregate([{$match:{"prov_fall":provFall}},{$group:{_id:`$${parametro}`,total:{$sum:1}}}]);
+    const canton = await defunciones.aggregate([{$match:{"cant_fall":cantFall}},{$group:{_id:`$${parametro}`,total:{$sum:1}}}]);
+    
+        res.send({año,mes,provincia,canton})
+
     
 });
 
+//****************************************************************************
 //INGRESO DE DEFUNCIONES
-
+//****************************************************************************
 
 
 router.get('/defunciones/registro',isAuthenticated ,async(req, res) => {

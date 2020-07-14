@@ -3,7 +3,6 @@
 <button class="btn btn-info mb-2" id="boton">buscar </button>
 </div>
 
-{{> navigation-admin}}  
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" id="busqueda">
 <div class="row">
   {{#each usuarios}}
@@ -18,10 +17,7 @@
         <p>{{ role }} </p>
         <p>{{date}}</p>
         <!-- DELETE REQUEST -->
-        <form action="/admin/delete/{{_id}}?_method=DELETE" method="POST">
-          <input type="hidden" name="_method" value="DELETE">
-          <button type="submit" class="btn btn-danger btn-block btn-sm">Delete</button>
-        </form>
+
       </div>
     </div>
   </div>
@@ -29,8 +25,8 @@
   <div class="card mx-auto">
     <div class="card-body">
       <h1>Hello {{user}}</h1>
-      <p clsss="lead">No hay usuarios registrados ingrese uno.</p>
-      <a href='/entidad/registro' class="btn btn-success btn-block">Create One!</a>
+      <p clsss="lead">No hay Entidades afiliadas </p>
+      
     </div>
   </div>
   {{/each}}

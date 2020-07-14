@@ -32,7 +32,9 @@ router.delete('/user/delete/:id', isAuthenticated, async(req, res) => {
 
 
 router.get('/admin/entidadAll', isAuthenticated, async(req, res) => {
-    const usuarios = await User.find({ role: "Entidad" }).lean().sort({ date: "desc" });
+
+    if (req.user.role == "Admin") {
+        const usuarios = await User.find({ role: "Entidad" }).lean().sort({ date: "desc" });
 
     res.render("admin/all-entidades", {
         user: req.user.name,
@@ -40,6 +42,25 @@ router.get('/admin/entidadAll', isAuthenticated, async(req, res) => {
      
     });
 
+    }else if(req.user.role=='User') {
+        
+            const usuarios = await User.find({ role: "Entidad" },["name","email","residencia"]).lean().sort({ date: "desc" });
+    
+        res.render("users/all-entidades", {
+            user: req.user.name,
+            usuarios
+         
+        });
+    }else {
+            const usuarios = await User.find({ role: "Entidad" },["name","email","residencia"]).lean().sort({ date: "desc" });
+    
+        res.render("users/all-entidades", {
+            user: req.user.name,
+            usuarios
+         
+        });
+    }
+    
 });
 
 
