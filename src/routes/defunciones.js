@@ -147,4 +147,70 @@ router.post('/defunciones/registro/llenar-parroquia', async(req, res) => {
     
 });
 
+
+
+
+//****************************************************************************
+//GESTION DE DEFUNCIONES
+//****************************************************************************
+
+
+router.get('/defunciones/gestion-entidad', isAuthenticated, async(req, res) => {
+    let id = req.user._id;
+    const defuncion = await defunciones.find({ codEntidad: String(id) }).lean().sort({ date: "desc" });
+  
+    res.render("defunciones/defunciones-gestion", {
+        user: req.user.name,
+        defuncion
+   
+    });
+
+});
+
+//admin
+router.get('/defunciones/gestion-entidad/:id', isAuthenticated, async(req, res) => {
+    let id = req.params.id;
+    console.log(id);
+    const defuncion = await defunciones.find({ codEntidad: String(id) }).lean().sort({ date: "desc" });
+  
+    res.render("defunciones/defunciones-gestion-admin", {
+        user: req.user.name,
+        defuncion
+   
+    });
+  
+
+});
+
+//delete
+router.delete('/defunciones/delete/:id', isAuthenticated, async(req, res) => {
+
+    await defunciones.findByIdAndDelete(req.params.id);
+
+    req.flash("success_msg", "Defuncion borrada satifactoriaente ");
+    res.redirect("/defunciones/gestion-entidad");
+});
+
+router.get("/defunciones/edit/:id",isAuthenticated,async(req,res)=>{
+    const defuncion= await defunciones.findById(req.params.id).lean();
+    res.render("defunciones/defunciones-form-edit",{defuncion});
+});
+
+
+//****************************************************************************
+//GESTION DE DEFUNCIONES
+//****************************************************************************
+
+router.put("/defunciones/edite/:id",isAuthenticated,async(req,res)=>{
+   
+   /* 
+    var index = Object.keys(body).indexOf("sexo","sem_gest");
+     console.log(index); */
+     let body = req.body;
+     await defunciones.findByIdAndUpdate(req.params.id, body);
+     req.flash("success_msg", "defuncion Actualizada correctamente");
+     res.redirect('/defunciones/gestion-entidad');
+    
+});
+
 module.exports = router

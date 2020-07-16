@@ -69,7 +69,12 @@ DETERMINANDO UN MODELO QUE PRONOSTICA LAS POSIBLES DEFUNCIONES FETALES QUE SE PU
                   <p class="card-text"> Representación gráfica de datos referentes a las defunciones fetales del Ecuador.</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                       <a role="button" class="btn btn-sm btn-outline-secondary" href="/usuario/login">Ingresar</a>
+                      {{#if user}}
+                      <a role="button" class="btn btn-sm btn-outline-secondary" href="/defun/graficas">Ingresar</a>
+                      {{else}}
+                      <a role="button" class="btn btn-sm btn-outline-secondary" href="/usuario/login">Ingresar</a>
+                      {{/if}}
+                       
                     </div>
                     
                   </div>
@@ -80,7 +85,7 @@ DETERMINANDO UN MODELO QUE PRONOSTICA LAS POSIBLES DEFUNCIONES FETALES QUE SE PU
               <div class="card mb-4 box-shadow">
                 <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap" src="/img/reportes.png">
                 <div class="card-body">
-                  <p class="card-text">Reprote cuerpo de información destinado a servir de análisis sobre un tópico determinado .</p>
+                  <p class="card-text">Reporte cuerpo de información destinado a servir de análisis sobre un tópico determinado .</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                       <a type="button" class="btn btn-sm btn-outline-secondary" href="/usuario/login"> >Ingresar</a>
@@ -97,7 +102,11 @@ DETERMINANDO UN MODELO QUE PRONOSTICA LAS POSIBLES DEFUNCIONES FETALES QUE SE PU
                   <p class="card-text">Instituciones afiliadas a la recolecion de datos.</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
+                      {{#if user }}
+                      <a type="button" class="btn btn-sm btn-outline-secondary" href="/admin/entidadAll"> >Ingresar</a>
+                      {{else}}
                      <a type="button" class="btn btn-sm btn-outline-secondary" href="/usuario/login"> >Ingresar</a>
+                     {{/if}}
                     </div>
                    
                   </div>

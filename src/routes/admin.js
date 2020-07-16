@@ -62,11 +62,21 @@ router.get('/admin/entidadAll', isAuthenticated, async(req, res) => {
     }
     
 });
+//defun-entidad
+router.get('/admin/allentidad/defunciones', isAuthenticated, async(req, res) => {
 
+    const usuarios = await User.find({ role: "Entidad" }).lean().sort({ date: "desc" });
+
+    res.render("admin/entidades-defun", {
+        user: req.user.name,
+        usuarios
+     
+    });
+});
 
 router.delete('/admin/delete/:id', isAuthenticated, async(req, res) => {
 
-    await Entidad.findByIdAndDelete(req.params.id);
+    await User.findByIdAndDelete(req.params.id);
 
     req.flash("success_msg", "Entidad borrada satifactoriaente ");
     res.redirect("/admin/entidadAll");

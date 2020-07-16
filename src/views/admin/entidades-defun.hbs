@@ -1,0 +1,40 @@
+<div class="container mt-5">
+<input type="text" id="for-busqueda">
+<button class="btn btn-info mb-2" id="boton">buscar </button>
+</div>
+
+{{> navigation-admin}}  
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" id="busqueda">
+<div class="row">
+  {{#each usuarios}}
+  <div class="col-md-3">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title d-flex justify-content-between align-items-center">
+          {{ name }} 
+        </h4>
+        <p>{{ email }} </p>
+        <p>{{ residencia }} </p>
+        <p>{{ role }} </p>
+        <p>{{date}}</p>
+        
+        <!-- DELETE REQUEST -->
+        <form action="/defunciones/gestion-entidad/{{_id}}" method="GET">
+          
+          <button type="submit" class="btn btn-success btn-block btn-sm">ver defunciones</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  <div class="card mx-auto">
+    <div class="card-body">
+      <h1>Hello {{user}}</h1>
+      <p clsss="lead">No hay usuarios registrados ingrese uno.</p>
+      <a href='/entidad/registro' class="btn btn-success btn-block">Create One!</a>
+    </div>
+  </div>
+  {{/each}}
+</div>
+</main>
+<script src="/js/buscador.js"></script>
