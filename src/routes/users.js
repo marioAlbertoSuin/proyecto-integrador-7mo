@@ -46,6 +46,9 @@ router.get('/usuario/registro', (req, res) => {
 router.post('/usuario/registro', async(req, res) => {
     let errors = [];
     const { name, residencia, email, password, confirm_password } = req.body;
+
+
+
     if (password != confirm_password) {
         errors.push({ text: "Passwords do not match." });
     }

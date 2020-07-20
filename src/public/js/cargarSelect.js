@@ -1,3 +1,30 @@
+////////////////////////////////////////////////////////////////////////////
+//madre llenar
+/////////////////////////////////////////////////////////////////////////////
+
+document.addEventListener("DOMContentLoaded", function(){
+    //....Codmadre
+    $.ajax({
+        url: '/defunciones/registro/llenar-madre',
+        data: {sms:"hola"},
+        type: 'POST',
+    
+        success: function(response) {
+         var Madres=response;
+         var selecMadre =document.getElementById("Codmadre");
+          
+        for (let i = 0;i < Madres.length;i++) {
+            selecMadre.options[i]=new Option(Madres[i].nom_mad,Madres[i]._id)
+            
+        }
+    
+    
+        }
+    }); 
+});
+
+
+
 function cambia(){
 borrar("cantFall");
 var provincia = document.getElementById("provFall");

@@ -7,13 +7,16 @@
   <div class="col-md-7 mx-auto">
     <div class="card">
       <div class="card-header">
-        Editar la defuncion
+        <center>
+            <h1>Editar la defuncion</h1>
+        </center>
+        
         
       </div>
       <div class="card-body">
       <form action="/defunciones/edite/{{defuncion._id}}?_method=PUT" method="POST">
         
-        <h1>Datos de la defuncion</h1>
+        
           <div class="form-group">
               <input type="button"value="Activar caja" onclick="activarCaja('sexo')"> 
               <label >Sexo</label>
@@ -137,159 +140,12 @@
               <input type="button"value="Activar caja" onclick="activarCaja('causa_fetal')"> 
             <input type="text" disabled=" " class="form-control" name="causa_fetal" id="causa_fetal" placeholder="Causa que ocasiono la defuncion fetal" value={{defuncion.causa_fetal}} >
           </div>
-          <h1>Datos de la madre</h1>
-          <div class="form-group">
-              <input type="button"value="Activar caja" onclick="activarCaja('nac_mad')"> 
-            <label >Nacionalidad de la madre</label>
-            <select name="nac_mad" id="nac_mad"disabled=" ">
-              <option value="Extranjera">Extranjera</option>
-              <option value="Ecuatoriana">Ecuatoriana</option>
-            </select>
-          </div>
-          <div class="form-group">
-              <input type="button"value="Activar caja" onclick="activarCaja('nom_pais')"> 
-            <input type="text" class="form-control" name="nom_pais" id="nom_pais" placeholder="Nombe del pais" value={{defuncion.nom_pais}} disabled=" ">
-          </div>
 
-
-          <div class="form-group">
-              <input type="button"value="Activar caja" onclick="activarCaja('fecha_mad')"> 
-              <label for="start">Fecha de nacimiento :</label>
-              <input type="date" id="start" name="fecha_mad"
-            value="2020-07-00"
-            min="1970-01-01" max="2040-12-31" id="fecha_mad" disabled=" ">
-
-          </div>
-
-          <div class="form-group">
-              <input type="button"value="Activar caja" onclick="activarCaja('hij_viv')"> 
-            <input type="number" class="form-control" name="hij_viv" id="hij_viv" placeholder="Cantidad hijos vivos" value={{defuncion.hij_viv}} disabled=" ">
-          </div>
-          <div class="form-group">
-              <input type="button"value="Activar caja" onclick="activarCaja('hij_vivm')"> 
-            <input type="number" class="form-control" name="hij_vivm" id="hij_vivm" placeholder="cuantos hijos que nacieron vivos han muerto" value={{defuncion.hij_vivm}} disabled=" ">
-          </div>
-          <div class="form-group">
-              <input type="button"value="Activar caja" onclick="activarCaja('hij_nacm')"> 
-            <input type="number" class="form-control" name="hij_nacm" id="hij_nacm" placeholder="Cuantos hijos nacieron muertos" value={{defuncion.hij_nacm}} disabled=" ">
-          </div>
-          <div class="form-group">
+                    <div class="form-group">
               <input type="button"value="Activar caja" onclick="activarCaja('con_pren')"> 
             <input type="number" class="form-control" name="con_pren" id="con_pren" placeholder="Cuantos controles prenatales realizo en este enbarazo" value={{defuncion.con_pren}} disabled=" ">
           </div>
-          <div class="form-group">
-              <input type="button"value="Activar caja" onclick="activarCaja('etnia')"> 
-            <label>Etnia de la madre</label>
-                <select name="etnia" id="etnia" disabled=" ">
-                <option value="Rural">Montubia</option> 
-                <option value="Urbana" >Montubia</option>
-                <option value="Urbana" >Mulata</option>
-                <option value="Urbana" >Afroecuatoriana/Afrodescendiente</option>
-                <option value="Urbana" >Negra</option>
-                <option value="Urbana" >Mestiza</option>
-                <option value="Urbana" >Indígena</option>
-                <option value="Urbana" >Blanca</option>
-                <option value="Urbana" >Otra</option>
-            
-            </select>
-          </div>
-          <div class="form-group">
-              <input type="button"value="Activar caja" onclick="activarCaja('est_civil')"> 
-                <label>Estado civil</label>
-                <select name="est_civil" id="est_civil" disabled=" ">
-                <option value="Viuda">Viuda</option> 
-                <option value="Separada" >Separada</option>
-                <option value="Divorciada" >Divorciada</option>
-                <option value="Unión de hecho" > Unión de hecho</option>
-                <option value="Soltera" >Soltera</option>
-                <option value="Unida" >Unida</option>
-                <option value="Casada" >Casada</option>
-                <option value="Sin información" >Sin información</option>
-            
-            
-            </select>
-          </div>
-          <div class="form-group">
-              <input type="button"value="Activar caja" onclick="activarCaja('sabe_leer')"> 
-                 <label>Sabe leer </label>
-                <select name="sabe_leer" id="sabe_leer" disabled=" ">
-                <option value="Si">Si</option> 
-                <option value="No">No</option> 
-                </select>
 
-          </div>
-          <div class="form-group">
-              <input type="button"value="Activar caja" onclick="activarCaja('niv_inst')"> 
-            <label> Nivel de Instrucion</label>
-            <select name="niv_inst" id="niv_inst" disabled=" ">
-              <option value="Ninguno">Ninguno</option>
-              <option value="Superior universitario">Superior universitario</option>
-              <option value="Educación Básica">Educación Básica</option>
-              <option value="Centro de alfabetización">Centro de alfabetización</option>
-              <option value="Superior">Superior</option>
-              <option value="Ciclo Post-Bachillerato">Ciclo Post-Bachillerato</option>
-              <option value="Secundaria">Secundaria</option>
-              <option value="Posgrado">Posgrado</option>
-              <option value="Educación Media / Bachillerato">Educación Media / Bachillerato</option>
-              <option value="Superior no universitario">Superior no universitario</option>
-              <option value="Primaria">Primaria</option>
-              <option value="Postgrado">Postgrado</option>
-              <option value="Sin información">Sin información</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-              <input type="button"value="Activar caja" onclick="activarCaja('provRes')">
-            <label>Provincia de residencia</label>
-            <select name="prov_res" id="provRes" onchange="cambio()" disabled=" ">
-              <option value="--">--</option>
-              <option value="Galápagos">Galápagos</option>
-              <option value="Zamora Chinchipe">Zamora Chinchipe</option>
-              <option value="Morona Santiago">Morona Santiago</option>
-              <option value="Azuay">Azuay</option>
-              <option value="Napo">Napo</option>
-              <option value="Sucumbíos">Sucumbíos</option>
-              <option value="Cańar">Cańar</option>
-              <option value="Cotopaxi">Cotopaxi</option>
-              <option value="Guayas">Guayas</option>
-              <option value="Imbabura">Imbabura</option>
-              <option value="El Oro">El Oro</option>
-              <option value="Bolívar">Bolívar</option>
-              <option value="Loja">Loja</option>
-              <option value="Pichincha">Pichincha</option>
-              <option value="Santa Elena">Santa Elena</option>
-              <option value="Orellana">Orellana</option>
-              <option value="Chimborazo">Chimborazo</option>
-              <option value="Esmeraldas">Esmeraldas</option>
-              <option value="Santo Domingo de los Tsáchilas">Santo Domingo de los Tsáchilas</option>
-              <option value="Tungurahua">Tungurahua</option>
-              <option value="Los Ríos">Los Ríos</option>
-              <option value="Pastaza">Pastaza</option>
-              <option value="Carchi">Carchi</option>
-              <option value="Manabí">Manabí</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <input type="button"value="Activar caja" onclick="activarCaja('cantRes')"> 
-             <label >Canton de residencia</label>
-             <select name="cant_res" id="cantRes" onchange="cambio2()" disabled=" ">
-               <option value="--">--</option>
-             </select>
-          </div>
-          <div class="form-group">
-            <input type="button"value="Activar caja" onclick="activarCaja('parrRes')">
-            <label >parroquia de residencia</label>
-             <select name="parr_res" id="parrRes" disabled=" ">
-
-             </select>
-          </div>
-          <div class="form-group">
-            <input type="button"value="Activar caja" onclick="activarCaja('area_res')">
-              <label >Area de residencia abitual</label>
-              <select name="area_res" id="area_res" disabled=" ">
-                <option value="Rural">Rural</option>
-                <option value="Urbana">Urbana</option>
-              </select>
 
           <button class="btn btn-primary btn-block">
             Signup 

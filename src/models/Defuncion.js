@@ -47,7 +47,7 @@ const UserSchema = new Schema({
         parr_res : {type:String},
         area_res : {type:String},
         date: { type: Date, default: Date.now },
-        codEntidad:{type:String,required:true}
+        Codmadre:{type:String,required:true}
   
 });
 

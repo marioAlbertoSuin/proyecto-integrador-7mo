@@ -2,7 +2,7 @@
 <input type="text" id="for-busqueda">
 <button class="btn btn-info mb-2" id="boton">buscar </button>
 </div>
-{{> navigation-admin}}  
+
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" id="busqueda">
 <div class="row">
  
@@ -13,13 +13,14 @@
         <h4 class="card-title d-flex justify-content-between align-items-center">
           {{ prov_fall }} <a href="/defunciones/edit/{{_id}}"><i class="fas fa-edit"></i></a>
         </h4>
+       
         <p>{{ cant_fall }} </p>
         <p>{{ parr_fall }} </p>
         <p>{{ causa_fetal }} </p>
         <p>{{lugar_ocur}}</p>
         <p>{{fecha_fall}}</p>
         <p>{{sexo}}</p>
-        <!--Eliminar  -->
+        <!--Eliminar  formulario defunciones -->
         <form action="/defunciones/delete/{{_id}}?_method=DELETE" method="POST">
           <input type="hidden" name="_method" value="DELETE">
           <button type="submit" class="btn btn-danger btn-block btn-sm">Delete</button>
@@ -30,7 +31,8 @@
   {{else}}
   <div class="card mx-auto">
     <div class="card-body">
-      <h1>Hola {{user}}</h1>
+      <h1>{{user}}</h1>
+       
       <p clsss="lead">No hay defunciones registradas </p>
       
     </div>

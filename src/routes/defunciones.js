@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const defunciones =require('../models/Defuncion');
 const { isAuthenticated } = require('../helpers/auth');
+const madres =require("../models/Madre");
 
 const passport = require('passport');
 
@@ -44,8 +45,6 @@ router.post('/defun/datos/graficas', async(req, res) => {
 //****************************************************************************
 //INGRESO DE DEFUNCIONES
 //****************************************************************************
-
-
 router.get('/defunciones/registro',isAuthenticated ,async(req, res) => {
    
     res.render('defunciones/defunciones-signup');
@@ -56,43 +55,29 @@ router.post('/defunciones/registro', isAuthenticated,async(req, res) => {
     
     let errors = [];
     var { sexo, sem_gest, fecha_fall, p_emb, asis_por , lugar_ocur ,prov_fall ,cant_fall,
-        parr_fall ,area_fall ,causa_fetal, nac_mad ,nom_pais, fecha_mad , hij_viv ,hij_vivm ,
-        hij_nacm ,con_pren ,etnia ,est_civil, niv_inst ,sabe_leer ,prov_res ,cant_res ,parr_res ,area_res
-    }  = req.body; 
+        parr_fall ,area_fall ,causa_fetal, con_pren,Codmadre,fecha_insc 
+        }  = req.body; 
     
 
-   
-    if(fecha_mad==""){
-        errors.push({text:"Escoja la fecha del nacimiento de la madre"});
-    }else{
-        
-        var hoy = new Date();
-        var cumpleanos = new Date(fecha_mad);
-        var edad_mad = hoy.getFullYear() - cumpleanos.getFullYear();
-        
-    }
+
     if(fecha_fall==""){
         errors.push({text:"Escoja la fecha de la defuncion"});
+    }
+    if(fecha_insc==""){
+        errors.push({text:"Escoja la fecha de la inscripcion"});
     }
 
     if (causa_fetal.length < 10) {
         errors.push({ text: "Ingrese una causa fetal." });
     }
-    if(nom_pais.length<4){
-        errors.push({ text: "Ingrese un pais." });
-    }
+
     if (prov_fall=='--') {
         errors.push({ text: "Escoja una opcion valida para la provincia del falleciminto." });
     } 
     if (cant_fall=='--') {
         errors.push({ text: "Escoja una opcion valida para el canton del falleciminto." });
     } 
-    if (prov_res=='--') {
-        errors.push({ text: "Escoja una opcion valida para la provincia de residencia." });
-    } 
-    if (cant_res=='--') {
-        errors.push({ text: "Escoja una opcion valida para el canton de residencia." });
-    } 
+
     if (errors.length > 0) {
         res.render("defunciones/defunciones-signup", {
             errors,
@@ -107,15 +92,17 @@ router.post('/defunciones/registro', isAuthenticated,async(req, res) => {
        var dia_fall = fechaFallecimiento.getDate();
        var mes_fall = meses[fechaFallecimiento.getMonth()];
        var anio_fall = fechaFallecimiento.getFullYear();
+       //////////////////////////////////////////////////
+       var fechainscrip = new Date(fecha_insc.replace(/-/g, '\/'))
+       var dia_insc = fechainscrip.getDate();
+       var mes_insc= meses[fechainscrip.getMonth()];
+       var anio_insc = fechainscrip.getFullYear();
+       ////////////////////////////////////////////////////
        sem_gest = parseInt(sem_gest);
-       hij_viv= parseInt(hij_viv);
-       hij_vivm= parseInt(hij_vivm);
-       hij_nacm=parseInt(hij_nacm);
        con_pren=parseInt(con_pren);
        
         const defuncion = new defunciones({ sexo, sem_gest, fecha_fall, p_emb, asis_por , lugar_ocur ,prov_fall ,cant_fall,
-            parr_fall ,area_fall ,causa_fetal, nac_mad ,nom_pais, fecha_mad , hij_viv ,hij_vivm ,
-            hij_nacm ,con_pren ,etnia ,est_civil, niv_inst ,sabe_leer ,prov_res ,cant_res ,parr_res ,area_res,dia_fall,mes_fall,anio_fall,edad_mad,codEntidad});
+            parr_fall ,area_fall ,causa_fetal,con_pren ,dia_fall,mes_fall,anio_fall,Codmadre,dia_insc,anio_insc,mes_insc});
          
             await defuncion.save();
             req.flash("success_msg", "estas registrado.");
@@ -123,7 +110,7 @@ router.post('/defunciones/registro', isAuthenticated,async(req, res) => {
         }
     
 });
-
+///////////////////////////////////////////////////////////////////////////////
 
 router.post('/defunciones/registro/llenar-canton', async(req, res) => {
     let datoCanton=req.body.datoCanton ;
@@ -148,7 +135,87 @@ router.post('/defunciones/registro/llenar-parroquia', async(req, res) => {
 });
 
 
+router.post('/defunciones/registro/llenar-madre', async(req, res) => {
+       
+    const madre = await madres.find({},["_id","nom_mad"]);
+    res.send(madre);
+    
+});
 
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+//****************************************************************************
+//INGRESO DE MADRES
+//****************************************************************************
+
+router.get('/defunciones/madres/registro',isAuthenticated ,async(req, res) => {
+   
+    res.render('madres/madres-signup');
+});
+
+router.post('/defunciones/madres/registro',isAuthenticated ,async(req, res) => {
+
+    var codEntidad=String(req.user._id);
+    
+    let errors = [];
+    var { nom_mad, nac_mad ,nom_pais, fecha_mad , hij_viv ,hij_vivm ,
+        hij_nacm  ,etnia ,est_civil, niv_inst ,sabe_leer ,prov_res ,cant_res ,parr_res ,area_res
+    }  = req.body; 
+    
+
+   
+    if(fecha_mad==""){
+        errors.push({text:"Escoja la fecha del nacimiento de la madre"});
+    }else{
+        
+        var hoy = new Date();
+        var cumpleanos = new Date(fecha_mad);
+        var edad_mad = hoy.getFullYear() - cumpleanos.getFullYear();
+        
+    }
+
+
+    if (nom_mad.length < 7) {
+        errors.push({ text: "Ingrese un nombre y apellido." });
+    }
+    if(nom_pais.length<4){
+        errors.push({ text: "Ingrese un pais." });
+    }
+    if (prov_res=='--') {
+        errors.push({ text: "Escoja una opcion valida para la provincia de residencia." });
+    } 
+    if (cant_res=='--') {
+        errors.push({ text: "Escoja una opcion valida para el canton de residencia." });
+    } 
+    if (errors.length > 0) {
+        res.render("defunciones/defunciones-signup", {
+            errors,
+
+        });
+    } 
+    else {
+      
+        
+        var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+       var fechaMadre = new Date(fecha_mad.replace(/-/g, '\/'))
+       var dia_mad = fechaMadre.getDate();
+       var mes_mad = meses[fechaMadre.getMonth()];
+       var anio_mad = fechaMadre.getFullYear();
+       hij_viv= parseInt(hij_viv);
+       hij_vivm= parseInt(hij_vivm);
+       hij_nacm=parseInt(hij_nacm);
+  
+       
+        const madre = new madres({ nom_mad ,nac_mad ,nom_pais, fecha_mad , hij_viv ,hij_vivm ,
+            hij_nacm ,etnia ,est_civil, niv_inst ,sabe_leer ,prov_res ,cant_res ,parr_res ,area_res,dia_mad,mes_mad,anio_mad,edad_mad,codEntidad});
+         
+            await madre.save();
+            req.flash("success_msg", "Madre Registrada.");
+            res.redirect("/usuario/login/succes");
+        }
+    
+});
 
 //****************************************************************************
 //GESTION DE DEFUNCIONES
@@ -157,49 +224,80 @@ router.post('/defunciones/registro/llenar-parroquia', async(req, res) => {
 
 router.get('/defunciones/gestion-entidad', isAuthenticated, async(req, res) => {
     let id = req.user._id;
-    const defuncion = await defunciones.find({ codEntidad: String(id) }).lean().sort({ date: "desc" });
+    const MADRES = await madres.find({ codEntidad: String(id) }).lean().sort({ date: "desc" });
   
-    res.render("defunciones/defunciones-gestion", {
+    res.render("defunciones/defunciones-madres-gestion", {
         user: req.user.name,
-        defuncion
+        MADRES
    
     });
 
 });
 
-//admin
-router.get('/defunciones/gestion-entidad/:id', isAuthenticated, async(req, res) => {
+////////////////obtener madres desde entidad (admin)
+
+router.get('/defunciones/gestion-ad-entidad/:id', isAuthenticated, async(req, res) => {
     let id = req.params.id;
-    console.log(id);
-    const defuncion = await defunciones.find({ codEntidad: String(id) }).lean().sort({ date: "desc" });
+    const MADRES = await madres.find({ codEntidad: String(id) }).lean().sort({ date: "desc" });
+  
+    res.render("defunciones/defunciones-madres-gestion", {
+        user: req.user.name,
+        MADRES
+   
+    });
+
+});
+
+
+///////////////////
+
+
+
+//
+//OBTENER TODAS LAS DEFUNCIONES POR MADRE
+router.get('/defunciones/madres/:id', isAuthenticated, async(req, res) => {
+    let id = req.params.id;
+    
+    const defuncion = await defunciones.find({ Codmadre: String(id) }).lean().sort({ date: "desc" });
   
     res.render("defunciones/defunciones-gestion-admin", {
         user: req.user.name,
         defuncion
    
-    });
+    }); 
   
 
 });
 
-//delete
+//delete defuncion
 router.delete('/defunciones/delete/:id', isAuthenticated, async(req, res) => {
 
     await defunciones.findByIdAndDelete(req.params.id);
 
     req.flash("success_msg", "Defuncion borrada satifactoriaente ");
-    res.redirect("/defunciones/gestion-entidad");
+    res.redirect("/usuario/login/succes");
 });
+//delete madre
+
+router.delete('/defunciones/delete-madre/:id', isAuthenticated, async(req, res) => {
+
+    await madres.findByIdAndDelete(req.params.id);
+
+    req.flash("success_msg", "Madre borrada satifactoriaente ");
+    res.redirect("/usuario/login/succes");
+});
+
+
+
+//****************************************************************************
+//editar DE DEFUNCIONES
+//****************************************************************************
 
 router.get("/defunciones/edit/:id",isAuthenticated,async(req,res)=>{
     const defuncion= await defunciones.findById(req.params.id).lean();
     res.render("defunciones/defunciones-form-edit",{defuncion});
 });
 
-
-//****************************************************************************
-//GESTION DE DEFUNCIONES
-//****************************************************************************
 
 router.put("/defunciones/edite/:id",isAuthenticated,async(req,res)=>{
    
@@ -209,8 +307,33 @@ router.put("/defunciones/edite/:id",isAuthenticated,async(req,res)=>{
      let body = req.body;
      await defunciones.findByIdAndUpdate(req.params.id, body);
      req.flash("success_msg", "defuncion Actualizada correctamente");
-     res.redirect('/defunciones/gestion-entidad');
+     res.redirect('/usuario/login/succes');
     
 });
+
+//****************************************************************************
+//editar DE madres
+//****************************************************************************
+
+router.get("/madres/edit/:id",isAuthenticated,async(req,res)=>{
+    const defuncion= await madres.findById(req.params.id).lean();
+    res.render("defunciones/madres-form-edit",{defuncion});
+});
+
+
+router.put("/madres/edite/:id",isAuthenticated,async(req,res)=>{
+   
+    /* 
+     var index = Object.keys(body).indexOf("sexo","sem_gest");
+      console.log(index); */
+      let body = req.body;
+      await madres.findByIdAndUpdate(req.params.id, body);
+      req.flash("success_msg", "defuncion Actualizada correctamente");
+      res.redirect('/usuario/login/succes');
+     
+ });
+
+
+
 
 module.exports = router

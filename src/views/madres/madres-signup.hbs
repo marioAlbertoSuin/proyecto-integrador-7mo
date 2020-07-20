@@ -1,0 +1,167 @@
+<br>
+<br>
+<br>
+<div class="row">
+  <div class="col-md-7 mx-auto">
+    <div class="card">
+      <div class="card-header">
+     <center>
+           <h1>Datos de la madre</h1>
+     </center>
+         
+      </div>
+      <div class="card-body">
+        <form action="/defunciones/madres/registro" method="POST">
+
+        <div class="form-group">
+            <input type="text" class="form-control" name="nom_mad" placeholder="Nombe y Apellido" >
+          </div>
+          <div class="form-group">
+            <label >Nacionalidad de la madre</label>
+            <select name="nac_mad" >
+              <option value="Extranjera">Extranjera</option>
+              <option value="Ecuatoriana">Ecuatoriana</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="nom_pais" placeholder="Nombe del pais" >
+          </div>
+
+
+
+          <div class="form-group">
+             
+              <label for="start">Fecha de nacimiento :</label>
+              <input type="date" id="start" name="fecha_mad"
+            value="2020-07-00"
+            min="1970-01-01" max="2040-12-31">
+
+          </div>
+
+          <div class="form-group">
+            <input type="number" class="form-control" name="hij_viv" placeholder="Cantidad hijos vivos" >
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-control" name="hij_vivm" placeholder="cuantos hijos que nacieron vivos han muerto" >
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-control" name="hij_nacm" placeholder="Cuantos hijos nacieron muertos" >
+          </div>
+
+          <div class="form-group">
+            <label>Etnia de la madre</label>
+                <select name="etnia">
+               
+                <option value="Montubia" >Montubia</option>
+                <option value="Mulata" >Mulata</option>
+                <option value="Afroecuatoriana/Afrodescendiente" >Afroecuatoriana/Afrodescendiente</option>
+                <option value="Negra" >Negra</option>
+                <option value="Mestiza" >Mestiza</option>
+                <option value="Indígena" >Indígena</option>
+                <option value="Blanca" >Blanca</option>
+                <option value="Otra" >Otra</option>
+            
+            </select>
+          </div>
+          <div class="form-group">
+                <label>Estado civil</label>
+                <select name="est_civil">
+                <option value="Viuda">Viuda</option> 
+                <option value="Separada" >Separada</option>
+                <option value="Divorciada" >Divorciada</option>
+                <option value="Unión de hecho" > Unión de hecho</option>
+                <option value="Soltera" >Soltera</option>
+                <option value="Unida" >Unida</option>
+                <option value="Casada" >Casada</option>
+                <option value="Sin información" >Sin información</option>
+            
+            
+            </select>
+          </div>
+          <div class="form-group">
+                 <label>Sabe leer </label>
+                <select name="sabe_leer">
+                <option value="Si">Si</option> 
+                <option value="No">No</option> 
+                </select>
+
+          </div>
+          <div class="form-group">
+            <label> Nivel de Instrucion</label>
+            <select name="niv_inst" >
+              <option value="Ninguno">Ninguno</option>
+              <option value="Superior universitario">Superior universitario</option>
+              <option value="Educación Básica">Educación Básica</option>
+              <option value="Centro de alfabetización">Centro de alfabetización</option>
+              <option value="Superior">Superior</option>
+              <option value="Ciclo Post-Bachillerato">Ciclo Post-Bachillerato</option>
+              <option value="Secundaria">Secundaria</option>
+              <option value="Posgrado">Posgrado</option>
+              <option value="Educación Media / Bachillerato">Educación Media / Bachillerato</option>
+              <option value="Superior no universitario">Superior no universitario</option>
+              <option value="Primaria">Primaria</option>
+              <option value="Postgrado">Postgrado</option>
+              <option value="Sin información">Sin información</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Prpvincia de residencia</label>
+            <select name="prov_res" id="provRes" onchange="cambio()">
+              <option value="--">--</option>
+              <option value="Galápagos">Galápagos</option>
+              <option value="Zamora Chinchipe">Zamora Chinchipe</option>
+              <option value="Morona Santiago">Morona Santiago</option>
+              <option value="Azuay">Azuay</option>
+              <option value="Napo">Napo</option>
+              <option value="Sucumbíos">Sucumbíos</option>
+              <option value="Cańar">Cańar</option>
+              <option value="Cotopaxi">Cotopaxi</option>
+              <option value="Guayas">Guayas</option>
+              <option value="Imbabura">Imbabura</option>
+              <option value="El Oro">El Oro</option>
+              <option value="Bolívar">Bolívar</option>
+              <option value="Loja">Loja</option>
+              <option value="Pichincha">Pichincha</option>
+              <option value="Santa Elena">Santa Elena</option>
+              <option value="Orellana">Orellana</option>
+              <option value="Chimborazo">Chimborazo</option>
+              <option value="Esmeraldas">Esmeraldas</option>
+              <option value="Santo Domingo de los Tsáchilas">Santo Domingo de los Tsáchilas</option>
+              <option value="Tungurahua">Tungurahua</option>
+              <option value="Los Ríos">Los Ríos</option>
+              <option value="Pastaza">Pastaza</option>
+              <option value="Carchi">Carchi</option>
+              <option value="Manabí">Manabí</option>
+            </select>
+          </div>
+          <div class="form-group">
+             <label >Canton de residencia</label>
+             <select name="cant_res" id="cantRes" onchange="cambio2()">
+               <option value="--">--</option>
+             </select>
+          </div>
+          <div class="form-group">
+            <label >parroquia de residencia</label>
+             <select name="parr_res" id="parrRes">
+
+             </select>
+          </div>
+          <div class="form-group">
+            
+              <label >Area de residencia abitual</label>
+              <select name="area_res" >
+                <option value="Rural">Rural</option>
+                <option value="Urbana">Urbana</option>
+              </select>
+
+          <button class="btn btn-primary btn-block">
+            Signup 
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/cargarSelect.js"></script>
+<script src = "https://code.jquery.com/jquery-3.4.1.min.js" integridad = "sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo =" crossorigin = "anónimo" > </cript>

@@ -8,6 +8,7 @@
 <div class="row">
   {{#each usuarios}}
   <div class="col-md-3">
+    <hr class="featurette-divider">
     <div class="card">
       <div class="card-body">
         <h4 class="card-title d-flex justify-content-between align-items-center">
@@ -19,7 +20,7 @@
         <p>{{date}}</p>
         
         <!-- DELETE REQUEST -->
-        <form action="/defunciones/gestion-entidad/{{_id}}" method="GET">
+        <form action="/defunciones/gestion-ad-entidad/{{_id}}" method="GET">
           
           <button type="submit" class="btn btn-success btn-block btn-sm">ver defunciones</button>
         </form>

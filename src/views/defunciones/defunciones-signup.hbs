@@ -1,6 +1,7 @@
 <br>
 <br>
 <br>
+
 <div class="row">
   <div class="col-md-7 mx-auto">
     <div class="card">
@@ -10,6 +11,18 @@
       <div class="card-body">
         <form action="/defunciones/registro" method="POST">
         <h1>Datos de la defuncion</h1>
+
+
+        <div class="form-group">
+              <label >Madre</label>
+            <select name="Codmadre" id="Codmadre">
+                <option value="--">Mujer</option> 
+                
+            
+            </select>
+          </div>
+
+
           <div class="form-group">
               <label >Sexo</label>
             <select name="sexo">
@@ -22,9 +35,19 @@
             <input type="number" class="form-control" name="sem_gest" placeholder="Periodo de gestación" >
           </div>
           <div class="form-group">
+            <input type="number" class="form-control" name="con_pren" placeholder="Cuantos controles prenatales realizo en este enbarazo" >
+          </div>
+          <div class="form-group">
 
             <label for="start">fecha de fallecimiento:</label>
             <input type="date" name="fecha_fall">
+          
+ 
+          </div>
+            <div class="form-group">
+
+            <label for="start">fecha de Inscripcion:</label>
+            <input type="date" name="fecha_insc">
           
  
           </div>
@@ -127,146 +150,7 @@
           <div class="form-group">
             <input type="text" class="form-control" name="causa_fetal" placeholder="Causa que ocasiono la defuncion fetal" >
           </div>
-          <h1>Datos de la madre</h1>
-          <div class="form-group">
-            <label >Nacionalidad de la madre</label>
-            <select name="nac_mad" >
-              <option value="Extranjera">Extranjera</option>
-              <option value="Ecuatoriana">Ecuatoriana</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" name="nom_pais" placeholder="Nombe del pais" >
-          </div>
-
-
-          <div class="form-group">
-             
-              <label for="start">Fecha de nacimiento :</label>
-              <input type="date" id="start" name="fecha_mad"
-            value="2020-07-00"
-            min="1970-01-01" max="2040-12-31">
-
-          </div>
-
-          <div class="form-group">
-            <input type="number" class="form-control" name="hij_viv" placeholder="Cantidad hijos vivos" >
-          </div>
-          <div class="form-group">
-            <input type="number" class="form-control" name="hij_vivm" placeholder="cuantos hijos que nacieron vivos han muerto" >
-          </div>
-          <div class="form-group">
-            <input type="number" class="form-control" name="hij_nacm" placeholder="Cuantos hijos nacieron muertos" >
-          </div>
-          <div class="form-group">
-            <input type="number" class="form-control" name="con_pren" placeholder="Cuantos controles prenatales realizo en este enbarazo" >
-          </div>
-          <div class="form-group">
-            <label>Etnia de la madre</label>
-                <select name="etnia">
-                <option value="Rural">Montubia</option> 
-                <option value="Urbana" >Montubia</option>
-                <option value="Urbana" >Mulata</option>
-                <option value="Urbana" >Afroecuatoriana/Afrodescendiente</option>
-                <option value="Urbana" >Negra</option>
-                <option value="Urbana" >Mestiza</option>
-                <option value="Urbana" >Indígena</option>
-                <option value="Urbana" >Blanca</option>
-                <option value="Urbana" >Otra</option>
-            
-            </select>
-          </div>
-          <div class="form-group">
-                <label>Estado civil</label>
-                <select name="est_civil">
-                <option value="Viuda">Viuda</option> 
-                <option value="Separada" >Separada</option>
-                <option value="Divorciada" >Divorciada</option>
-                <option value="Unión de hecho" > Unión de hecho</option>
-                <option value="Soltera" >Soltera</option>
-                <option value="Unida" >Unida</option>
-                <option value="Casada" >Casada</option>
-                <option value="Sin información" >Sin información</option>
-            
-            
-            </select>
-          </div>
-          <div class="form-group">
-                 <label>Sabe leer </label>
-                <select name="sabe_leer">
-                <option value="Si">Si</option> 
-                <option value="No">No</option> 
-                </select>
-
-          </div>
-          <div class="form-group">
-            <label> Nivel de Instrucion</label>
-            <select name="niv_inst" >
-              <option value="Ninguno">Ninguno</option>
-              <option value="Superior universitario">Superior universitario</option>
-              <option value="Educación Básica">Educación Básica</option>
-              <option value="Centro de alfabetización">Centro de alfabetización</option>
-              <option value="Superior">Superior</option>
-              <option value="Ciclo Post-Bachillerato">Ciclo Post-Bachillerato</option>
-              <option value="Secundaria">Secundaria</option>
-              <option value="Posgrado">Posgrado</option>
-              <option value="Educación Media / Bachillerato">Educación Media / Bachillerato</option>
-              <option value="Superior no universitario">Superior no universitario</option>
-              <option value="Primaria">Primaria</option>
-              <option value="Postgrado">Postgrado</option>
-              <option value="Sin información">Sin información</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Prpvincia de residencia</label>
-            <select name="prov_res" id="provRes" onchange="cambio()">
-              <option value="--">--</option>
-              <option value="Galápagos">Galápagos</option>
-              <option value="Zamora Chinchipe">Zamora Chinchipe</option>
-              <option value="Morona Santiago">Morona Santiago</option>
-              <option value="Azuay">Azuay</option>
-              <option value="Napo">Napo</option>
-              <option value="Sucumbíos">Sucumbíos</option>
-              <option value="Cańar">Cańar</option>
-              <option value="Cotopaxi">Cotopaxi</option>
-              <option value="Guayas">Guayas</option>
-              <option value="Imbabura">Imbabura</option>
-              <option value="El Oro">El Oro</option>
-              <option value="Bolívar">Bolívar</option>
-              <option value="Loja">Loja</option>
-              <option value="Pichincha">Pichincha</option>
-              <option value="Santa Elena">Santa Elena</option>
-              <option value="Orellana">Orellana</option>
-              <option value="Chimborazo">Chimborazo</option>
-              <option value="Esmeraldas">Esmeraldas</option>
-              <option value="Santo Domingo de los Tsáchilas">Santo Domingo de los Tsáchilas</option>
-              <option value="Tungurahua">Tungurahua</option>
-              <option value="Los Ríos">Los Ríos</option>
-              <option value="Pastaza">Pastaza</option>
-              <option value="Carchi">Carchi</option>
-              <option value="Manabí">Manabí</option>
-            </select>
-          </div>
-          <div class="form-group">
-             <label >Canton de residencia</label>
-             <select name="cant_res" id="cantRes" onchange="cambio2()">
-               <option value="--">--</option>
-             </select>
-          </div>
-          <div class="form-group">
-            <label >parroquia de residencia</label>
-             <select name="parr_res" id="parrRes">
-
-             </select>
-          </div>
-          <div class="form-group">
-            
-              <label >Area de residencia abitual</label>
-              <select name="area_res" >
-                <option value="Rural">Rural</option>
-                <option value="Urbana">Urbana</option>
-              </select>
+          
 
           <button class="btn btn-primary btn-block">
             Signup 
