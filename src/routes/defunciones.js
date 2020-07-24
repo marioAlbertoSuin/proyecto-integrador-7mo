@@ -112,6 +112,8 @@ router.post('/defunciones/registro', isAuthenticated,async(req, res) => {
 });
 ///////////////////////////////////////////////////////////////////////////////
 
+
+
 router.post('/defunciones/registro/llenar-canton', async(req, res) => {
     let datoCanton=req.body.datoCanton ;
     
@@ -141,6 +143,30 @@ router.post('/defunciones/registro/llenar-madre', async(req, res) => {
     res.send(madre);
     
 });
+
+
+router.post('/defunciones/registro/llenar-causa', async(req, res) => {
+       
+    const causa = await defunciones.aggregate([
+        {$group:{_id:"$causa_fetal"}}
+        ]);
+    
+    
+    res.send(causa);
+    
+});
+
+router.post('/defunciones/registro/llenar-anio', async(req, res) => {
+       //console.log("hola")
+    const causa = await defunciones.aggregate([
+        {$group:{_id:"$anio_insc"}}
+        ]);
+    
+    
+    res.send(causa);
+    
+});
+
 
 /////////////////////////////////////////////////////////////////////////////////////
 

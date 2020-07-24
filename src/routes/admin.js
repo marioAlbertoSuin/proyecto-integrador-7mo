@@ -84,14 +84,101 @@ router.delete('/admin/delete/:id', isAuthenticated, async(req, res) => {
 
 
 //defunciones
+//********************************************************************
+//********************************************************************
 
 
 
+
+//REPORTES
+//********************************************************************
+//********************************************************************
     
    
   
+router.get('/admin/reportes', isAuthenticated, async(req, res) => {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+     if(dd<10){
+            dd='0'+dd
+        } 
+        if(mm<10){
+            mm='0'+mm
+        } 
+    
+    today = yyyy+'-'+mm+'-'+dd;
+    res.render("defunciones/reportes",{today});
+ 
+});
 
+router.post('/admin/reportes', isAuthenticated, async(req, res) => {
+    var parametro=req.body.Parametro;
+    if (parametro=="dia") { 
+        var dia=req.body.dia;
+        const causas = await defunciones.aggregate([
+            {$match:{"fecha_insc":dia}},  
+            {$group:{_id:"$causa_fetal",total:{$sum:1}}}
+        ]);
+        const etnia = await defunciones.aggregate([
+            {$match:{"fecha_insc":dia}},  
+            {$group:{_id:"$etnia",total:{$sum:1}}}
+        ]);
+        const instruccion = await defunciones.aggregate([
+            {$match:{"fecha_insc":dia}},  
+            {$group:{_id:"$niv_inst",total:{$sum:1}}}
+        ]);
+        const prov = await defunciones.aggregate([
+            {$match:{"fecha_insc":dia}},  
+            {$group:{_id:"$prov_fall",total:{$sum:1}}}
+        ]);
+        res.send({causas,etnia,instruccion,prov});
+    }else if(parametro=="mes"){
+        var mes=req.body.mes;
+        var año=parseInt(req.body.año);
+        const causas = await defunciones.aggregate([
+            {$match:{"mes_insc":mes,"anio_insc":año}},  
+            {$group:{_id:"$causa_fetal",total:{$sum:1}}}
+        ]);
+        const etnia = await defunciones.aggregate([
+            {$match:{"mes_insc":mes,"anio_insc":año}},  
+            {$group:{_id:"$etnia",total:{$sum:1}}}
+        ]);
+        const instruccion = await defunciones.aggregate([
+            {$match:{"mes_insc":mes,"anio_insc":año}},  
+            {$group:{_id:"$niv_inst",total:{$sum:1}}}
+        ]);
+        const prov = await defunciones.aggregate([
+            {$match:{"mes_insc":mes,"anio_insc":año}},  
+            {$group:{_id:"$prov_fall",total:{$sum:1}}}
+        ]);
+        res.send({causas,etnia,instruccion,prov});
+    }else{
+        
+        var año=parseInt(req.body.año);
+        const causas = await defunciones.aggregate([
+            {$match:{"anio_insc":año}},  
+            {$group:{_id:"$causa_fetal",total:{$sum:1}}}
+        ]);
+        const etnia = await defunciones.aggregate([
+            {$match:{"anio_insc":año}},  
+            {$group:{_id:"$etnia",total:{$sum:1}}}
+        ]);
+        const instruccion = await defunciones.aggregate([
+            {$match:{"anio_insc":año}},  
+            {$group:{_id:"$niv_inst",total:{$sum:1}}}
+        ]);
+        const prov = await defunciones.aggregate([
+            {$match:{"anio_insc":año}},  
+            {$group:{_id:"$prov_fall",total:{$sum:1}}}
+        ]);
+        res.send({causas,etnia,instruccion,prov});
 
-
+    }
+    
+    
+ 
+});
 
 module.exports = router

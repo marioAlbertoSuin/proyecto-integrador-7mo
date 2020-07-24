@@ -2,6 +2,8 @@
 //madre llenar
 /////////////////////////////////////////////////////////////////////////////
 
+
+
 document.addEventListener("DOMContentLoaded", function(){
     //....Codmadre
     $.ajax({
@@ -21,6 +23,30 @@ document.addEventListener("DOMContentLoaded", function(){
     
         }
     }); 
+    //...causa
+    $.ajax({
+        url: '/defunciones/registro/llenar-causa',
+        data: {sms:"hola"},
+        type: 'POST',
+    
+        success: function(response) {
+         var Madres=response;
+         var selecMadre =document.getElementById("causa_fetal");
+          
+        for (let i = 0;i < Madres.length;i++) {
+            selecMadre.options[i]=new Option(Madres[i]._id,Madres[i]._id)
+            
+        }
+    
+    
+        }
+    }); 
+
+
+
+
+
+
 });
 
 

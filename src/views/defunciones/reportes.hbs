@@ -1,0 +1,318 @@
+
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading">SIPARDFE <span class="text-muted">Reportes.</span></h2>
+            <p class="lead">
+                    Genere reportes referentes a las defunciones fetales por rangos de tiempo:
+                    
+            </p>
+            <div class="checkbox" >
+              <table>
+                <tr>
+                  <td>Año<input type="radio" name="parametro" value="año" id="añocheck" onclick="obtemerParam('año')" >  </td>
+                                
+                  <td> Mes<input type="radio" name="parametro" value="mes" id="mescheck" onclick="obtemerParam('mes')" ></td>
+                                  
+                  <td> Dia<input type="radio" name="parametro" value="dia" id="diacheck" onclick="obtemerParam('dia')" > </td>
+                </tr>
+              </table>
+                
+                
+                
+            </div>
+             <hr class="featurette-divider">
+    <center>
+            <input type="date" name="dia" id="dia"
+            min="2016-01-01" max="{{today}}" style="display: none;"
+            >
+            <select  id="año" style="display: none;"></select>
+            <select  id="mes" style="display: none;">
+              <option value="Enero">Enero</option>
+              <option value="Febrero">Febrero</option>
+              <option value="Marzo">Marzo</option>
+              <option value="Abril">Abril</option>
+              <option value="Mayo">Mayo</option>
+              <option value="Junio">Junio</option>
+              <option value="Julio">Julio</option>
+              <option value="Agosto">Agosto</option>
+              <option value="Septiembre">Septiembre</option>
+              <option value="Octubre">Octubre</option>
+              <option value="Noviembre">Noviembre</option>
+              <option value="Diciembre">Diciembre</option>
+            </select>
+            
+         
+</center>
+          </div>
+          <div class="col-md-5">
+            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto"  src="/img/reportesf.png">
+          </div>
+         
+        </div>
+        <center>
+          <button class="btn btn-info mb-2" onclick="GenerarReporte()">Generar</button>
+        </center>
+         <hr class="featurette-divider">
+         <center>
+        <iframe   width="75%" height="800px" id="frame" name="frame" style="border: 0;">
+
+        </iframe>
+          </center>
+        <hr class="featurette-divider">
+        <br>
+<div id="test" style="display: none;">
+  <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col-md-4" id="etnia">
+            <h2>Etnia</h2>
+            <h7> Total de defunciones corespondientes a la etnia de la madre</h7>
+          </div>
+          <hr class="featurette-divider">
+          <div class="col-md-4" id="Provincia">
+            <h2>Provincia</h2>
+            <h7> Total de defunciones corespondientes a la provincia de la defuncion</h7>
+          </div>
+          <hr class="featurette-divider">
+          <div class="col-md-4" id="inst">
+            <h2>Nivel Instruccion de la madre</h2>
+            <h7> Total de defunciones corespondientes al nivel de instruccion de la madre</h7>
+          </div>
+          <hr class="featurette-divider">
+          <div class="col-md-4" id="causa">
+            <h2>Causa de la defuncion fetal</h2>
+            <h7> Total de defunciones corespondientes a las causas de las defunciones fetales</h7>
+          </div>
+        </div> 
+  </div>             
+</div>
+
+<script src="/js/jspdf.min.js"></script>
+<script>
+
+function baciarTEst(){
+   $("#etnia").empty();
+   $("#inst").empty();
+   $("#causa").empty();
+   $("#Provincia").empty();
+}
+
+
+function generarPDF(){
+  var doc = new jsPDF();
+  
+  //
+  doc.setProperties({
+    title: `Sipardf reporte ${new Date()}`,
+    
+    author: 'Sipardf',
+    keywords: 'Defunciones,Ecuador'
+  });
+  
+  doc.setFontSize(22);
+  doc.text(75, 20, 'Sipardf Reporte');
+  doc.setFontSize(7);
+  doc.fromHTML($("#test").get(0),20,20,{
+    "width":300
+  });
+
+  //
+  var blobPDF =new Blob([doc.output("blob")],{type:"application/pdf"});
+  var BlobUrl =URL.createObjectURL(blobPDF);
+  $("#frame").attr("src",BlobUrl);
+
+}
+
+
+
+
+function obtenerAños(){
+   $.ajax({
+                      url: '/defunciones/registro/llenar-anio',
+                      data: {sms:"hola"},
+                      type: 'POST',
+                  
+                      success: function(response) {
+                        
+                      var Madres=response;
+                      var selecMadre =document.getElementById("año");
+                        
+                      for (let i = 0;i < Madres.length;i++) {
+                          selecMadre.options[i]=new Option(Madres[i]._id,Madres[i]._id)
+                          
+                      }
+                  
+                  
+                      }
+                  }); 
+}
+
+function obtenerFecha(fecha){
+    var today = new Date(fecha.replace(/-/g, '\/'));
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    
+    today = mm+'/'+dd+'/'+yyyy;
+    return today
+}
+
+
+function obtemerParam(Parametro){
+    obtenerAños();
+     if(Parametro == 'dia'){
+                $("#dia").css("display", "block");
+                $("#mes").css("display", "none");
+                $("#año").css("display", "none");
+
+                
+            }else if(Parametro == 'mes'){
+                $("#año").css("display", "block");
+                $("#dia").css("display", "none");
+                $("#mes").css("display", "block");
+                
+            }else{
+                $("#dia").css("display", "none");
+                $("#mes").css("display", "none");
+                 
+
+              $("#año").css("display", "block");
+            }
+
+}  
+
+function GenerarReporte(){
+ 
+  var añoC = document.getElementById("añocheck").checked;
+  var mesC = document.getElementById("mescheck").checked;
+  var diaC = document.getElementById("diacheck").checked;
+  if(añoC==true){
+    var año = document.getElementById("año").value;
+                  $.ajax({
+                      url: '/admin/reportes',
+                      data: {año,Parametro:"anio"},
+                      type: 'POST',
+                  
+                      success: function(response) {
+                        
+                      var Datos=response;
+                      if(Datos.etnia.length==0){
+                        alert("no hay datos para esos valores")
+                      }else{
+                        for(i=0;i<Datos.etnia.length;i++){
+                           
+                            $("#etnia").append('<p>'+Datos.etnia[i]._id+'                  |      Total:     |' + Datos.etnia[i].total+ '</p>');
+                        }
+                        for(i=0;i<Datos.causas.length;i++){
+                           
+                            $("#causa").append('<p>'+Datos.causas[i]._id+'                  |      Total:     |' + Datos.causas[i].total+ '</p>');
+                        }
+                        for(i=0;i<Datos.instruccion.length;i++){
+                           
+                            $("#inst").append('<p>'+Datos.instruccion[i]._id+'                  |      Total:     |' + Datos.instruccion[i].total+ '</p>');
+                        }
+                        for(i=0;i<Datos.prov.length;i++){
+                           
+                            $("#Provincia").append('<p>'+Datos.prov[i]._id+'                  |      Total:     |' + Datos.prov[i].total+ '</p>');
+                        }
+
+                        generarPDF();
+                        baciarTEst();
+                        }
+                        
+                      }
+                  
+                   
+                      
+                  });
+  }else if(mesC==true){
+    var mes = document.getElementById("mes").value;
+    var año = document.getElementById("año").value;
+    console.log(año," ", mes);
+              $.ajax({
+                      url: '/admin/reportes',
+                      data: {mes,año,Parametro:"mes"},
+                      type: 'POST',
+                  
+                      success: function(response) {
+                        
+                      var Datos=response;
+                      if(Datos.etnia.length==0){
+                        alert("no hay datos para esos valores")
+                      }else{
+                        for(i=0;i<Datos.etnia.length;i++){
+                           
+                            $("#etnia").append('<p>'+Datos.etnia[i]._id+'                  |      Total:     |' + Datos.etnia[i].total+ '</p>');
+                        }
+                        for(i=0;i<Datos.causas.length;i++){
+                           
+                            $("#causa").append('<p>'+Datos.causas[i]._id+'                  |      Total:     |' + Datos.causas[i].total+ '</p>');
+                        }
+                        for(i=0;i<Datos.instruccion.length;i++){
+                           
+                            $("#inst").append('<p>'+Datos.instruccion[i]._id+'                  |      Total:     |' + Datos.instruccion[i].total+ '</p>');
+                        }
+                        for(i=0;i<Datos.prov.length;i++){
+                           
+                            $("#Provincia").append('<p>'+Datos.prov[i]._id+'                  |      Total:     |' + Datos.prov[i].total+ '</p>');
+                        }
+                        generarPDF();
+                        baciarTEst();
+                      }
+                  
+                   
+                      }
+                  });
+  }else{
+    var dia = document.getElementById("dia").value;
+    dia=obtenerFecha(dia);
+    
+          $.ajax({
+                      url: '/admin/reportes',
+                      data: {dia,Parametro:"dia"},
+                      type: 'POST',
+                  
+                      success: function(response) {
+                        
+                      var Datos=response;
+                      console.log(Datos.etnia.length);
+                      if(Datos.etnia.length==0){
+                        alert("no hay datos para esos valores")
+                      }else{
+                        for(i=0;i<Datos.etnia.length;i++){
+                           
+                            $("#etnia").append('<p>'+Datos.etnia[i]._id+'                  |      Total:     |' + Datos.etnia[i].total+ '</p>');
+                        }
+                        for(i=0;i<Datos.causas.length;i++){
+                           
+                            $("#causa").append('<p>'+Datos.causas[i]._id+'                  |      Total:     |' + Datos.causas[i].total+ '</p>');
+                        }
+                        for(i=0;i<Datos.instruccion.length;i++){
+                           
+                            $("#inst").append('<p>'+Datos.instruccion[i]._id+'                  |      Total:     |' + Datos.instruccion[i].total+ '</p>');
+                        }
+                        for(i=0;i<Datos.prov.length;i++){
+                           
+                            $("#Provincia").append('<p>'+Datos.prov[i]._id+'                  |      Total:     |' + Datos.prov[i].total+ '</p>');
+                        }
+                        generarPDF();
+                        baciarTEst();
+                      }
+                  
+                   
+                      }
+                  });
+  }
+  
+ 
+
+
+}
+
+
+</script>    
+
+
+
+ <script src = "https://code.jquery.com/jquery-3.4.1.min.js" integridad = "sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo =" crossorigin = "anónimo" > </cript>
