@@ -100,8 +100,8 @@ router.post('/defunciones/registro', isAuthenticated,async(req, res) => {
        ////////////////////////////////////////////////////
        sem_gest = parseInt(sem_gest);
        con_pren=parseInt(con_pren);
-       
-        const defuncion = new defunciones({ sexo, sem_gest, fecha_fall, p_emb, asis_por , lugar_ocur ,prov_fall ,cant_fall,
+       inscrip=fechainscrip.getMonth()+1+'/'+dia_insc+'/'+anio_insc;
+        const defuncion = new defunciones({"fecha_insc":inscrip, sexo, sem_gest, fecha_fall, p_emb, asis_por , lugar_ocur ,prov_fall ,cant_fall,
             parr_fall ,area_fall ,causa_fetal,con_pren ,dia_fall,mes_fall,anio_fall,Codmadre,dia_insc,anio_insc,mes_insc});
          
             await defuncion.save();

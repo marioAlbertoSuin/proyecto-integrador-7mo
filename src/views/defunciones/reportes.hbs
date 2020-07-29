@@ -1,4 +1,83 @@
 
+
+{{!-- 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ --}}
+
+
+
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading">SIPARDFE <span class="text-muted">Predicción.</span></h2>
+            <p class="lead">
+                    Obserbe prediciones de defunciones fetales con respecto a tiempo 
+                    
+            </p>
+            <div class="checkbox" >
+              <table>
+                <tr>
+                  <td>Año<input type="radio" name="parametro1" value="año" id="añocheck1" onclick="obtemerParam1('año')" >  </td>
+                                
+                  <td> Mes<input type="radio" name="parametro1" value="mes" id="mescheck1" onclick="obtemerParam1('mes')" ></td>
+                                  
+                  <td> Dia<input type="radio" name="parametro1" value="dia" id="diacheck1" onclick="obtemerParam1('dia')" > </td>
+                </tr>
+              </table>
+                
+                
+                
+            </div>
+             <hr class="featurette-divider">
+    <center>
+            <input type="date" name="dia" id="dia1"
+            min="2016-01-01" max="{{today}}" style="display: none;"
+            >
+            <select  id="año1" style="display: none;"></select>
+            <select  id="mes1" style="display: none;">
+              <option value=1>Enero</option>
+              <option value=2>Febrero</option>
+              <option value=3>Marzo</option>
+              <option value=4>Abril</option>
+              <option value=5>Mayo</option>
+              <option value=6>Junio</option>
+              <option value=7>Julio</option>
+              <option value=8>Agosto</option>
+              <option value=9>Septiembre</option>
+              <option value=10>Octubre</option>
+              <option value=11>Noviembre</option>
+              <option value=12>Diciembre</option>
+            </select>
+            
+         
+</center>
+          </div>
+          <div class="col-md-5">
+            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto"  src="/img/pre.jpg">
+          </div>
+         
+        </div>
+        <center>
+          <button class="btn btn-info mb-2" onclick="ObtenerDatos1()">Generar</button>
+        </center>
+         <hr class="featurette-divider">
+
+
+  <div class="table-responsive">
+            <table class="table table-striped table-sm" id="Table">
+
+              <tbody>
+               
+              </tbody>
+            </table>
+          </div>
+
+
+
+{{!-- /////////////////////////////////////////////////////////////////// --}}          
+
+
+
         <div class="row featurette">
           <div class="col-md-7">
             <h2 class="featurette-heading">SIPARDFE <span class="text-muted">Reportes.</span></h2>
@@ -65,23 +144,19 @@
         <!-- Example row of columns -->
         <div class="row">
           <div class="col-md-4" id="etnia">
-            <h2>Etnia</h2>
-            <h7> Total de defunciones corespondientes a la etnia de la madre</h7>
+         
           </div>
           <hr class="featurette-divider">
           <div class="col-md-4" id="Provincia">
-            <h2>Provincia</h2>
-            <h7> Total de defunciones corespondientes a la provincia de la defuncion</h7>
+          
           </div>
           <hr class="featurette-divider">
           <div class="col-md-4" id="inst">
-            <h2>Nivel Instruccion de la madre</h2>
-            <h7> Total de defunciones corespondientes al nivel de instruccion de la madre</h7>
+         
           </div>
           <hr class="featurette-divider">
           <div class="col-md-4" id="causa">
-            <h2>Causa de la defuncion fetal</h2>
-            <h7> Total de defunciones corespondientes a las causas de las defunciones fetales</h7>
+        
           </div>
         </div> 
   </div>             
@@ -89,6 +164,93 @@
 
 <script src="/js/jspdf.min.js"></script>
 <script>
+
+
+
+function obtemerParam1(Parametro){
+    obtenerAños();
+     if(Parametro == 'dia'){
+                $("#dia1").css("display", "block");
+                $("#mes1").css("display", "none");
+                $("#año1").css("display", "none");
+
+                
+            }else if(Parametro == 'mes'){
+                $("#año1").css("display", "block");
+                $("#dia1").css("display", "none");
+                $("#mes1").css("display", "block");
+                
+            }else{
+                $("#dia1").css("display", "none");
+                $("#mes1").css("display", "none");
+                 
+
+              $("#año1").css("display", "block");
+            }
+
+}  
+
+function ObtenerDatos1(){
+parametro="";
+datos={}
+  var añoC = document.getElementById("añocheck1").checked;
+  var mesC = document.getElementById("mescheck1").checked;
+  var diaC = document.getElementById("diacheck1").checked;
+  if(añoC==true){
+      var año = document.getElementById("año1").value;
+      parametro="anio";
+      datos={año,parametro}
+  }else if(mesC==true){
+      var mes = document.getElementById("mes1").value;
+      var año = document.getElementById("año1").value;
+      parametro="mes";
+      datos={año,mes,parametro}
+  }else if(diaC==true){
+      var dia = document.getElementById("dia1").value;
+      parametro="dia"
+      datos={parametro,dia};
+  }else{
+      alert("Escoja una opcion");
+  }
+     $.ajax({
+                      url: '/admin/obtener/prediccion',
+                      data: datos,
+                      type: 'POST',
+
+                      success: function(response) {
+                        
+                          tamaño=response.hombre.length;
+                          if(tamaño==0){
+                              alert("no exiten datos para esa fecha");
+                          }else{
+                               for(i=0;i<tamaño;i++){
+                           $("#Table").empty();
+                            $("#Table").append(
+                                '<thead><tr><th>Fecha</th><th>Genero</th><th>Total Defunciones</th></tr></thead>'+
+                                '<tr><td>'+response.hombre[i].Date+'</td><td>Masculino</td><td>' + response.hombre[i].Defunciones_Masculino+ '</td></tr>'+
+                                '<tr><td>'+response.mujer[i].Date+'</td><td>Femenino</td><td>' + response.mujer[i].Defunciones_Mujer+ '</td></tr>'+
+                                '<tr><td>'+response.indeterminados[i].Date+'</td><td>Indeterminado</td><td>' + response.indeterminados[i].Defunciones_Indeterminado+ '</td></tr>'+
+                                '<tr><td>'+response.total[i].Date+'</td><td>Total</td><td>' + response.total[i].Defunciones+ '</td></tr>'
+                                
+                            
+                            
+                            
+                            
+                            
+                            );
+                        }
+                          }
+                         
+                        
+                      }
+    }); 
+
+}
+
+
+
+
+
 
 function baciarTEst(){
    $("#etnia").empty();
@@ -136,9 +298,11 @@ function obtenerAños(){
                         
                       var Madres=response;
                       var selecMadre =document.getElementById("año");
+                      var selecMadres =document.getElementById("año1");
                         
                       for (let i = 0;i < Madres.length;i++) {
                           selecMadre.options[i]=new Option(Madres[i]._id,Madres[i]._id)
+                          selecMadres.options[i]=new Option(Madres[i]._id,Madres[i]._id)
                           
                       }
                   
@@ -200,6 +364,11 @@ function GenerarReporte(){
                       if(Datos.etnia.length==0){
                         alert("no hay datos para esos valores")
                       }else{
+
+                         $("#etnia").append('<h4>Etnia</h4><h7> Total de defunciones corespondientes a la etnia de la madre</h7>');
+                         $("#causa").append('<h4>Causa de la defuncion fetal</h4><h7> Total de defunciones corespondientes a las causas de las defunciones fetales</h7>');
+                         $("#inst").append('   <h4>Nivel Instruccion de la madre</h4><h7> Total de defunciones corespondientes al nivel de instruccion de la madre</h7>');
+                          $("#Provincia").append('  <h4>Provincia</h4><h7> Total de defunciones corespondientes a la provincia de la defuncion</h7>');
                         for(i=0;i<Datos.etnia.length;i++){
                            
                             $("#etnia").append('<p>'+Datos.etnia[i]._id+'                  |      Total:     |' + Datos.etnia[i].total+ '</p>');
@@ -241,6 +410,11 @@ function GenerarReporte(){
                       if(Datos.etnia.length==0){
                         alert("no hay datos para esos valores")
                       }else{
+                         $("#etnia").append('<h4>Etnia</h4><h7> Total de defunciones corespondientes a la etnia de la madre</h7>');
+                         $("#causa").append('<h4>Causa de la defuncion fetal</h4><h7> Total de defunciones corespondientes a las causas de las defunciones fetales</h7>');
+                         $("#inst").append('   <h4>Nivel Instruccion de la madre</h4><h7> Total de defunciones corespondientes al nivel de instruccion de la madre</h7>');
+                         $("#Provincia").append('  <h4>Provincia</h4><h7> Total de defunciones corespondientes a la provincia de la defuncion</h7>');
+                        
                         for(i=0;i<Datos.etnia.length;i++){
                            
                             $("#etnia").append('<p>'+Datos.etnia[i]._id+'                  |      Total:     |' + Datos.etnia[i].total+ '</p>');
@@ -280,7 +454,12 @@ function GenerarReporte(){
                       if(Datos.etnia.length==0){
                         alert("no hay datos para esos valores")
                       }else{
-                        for(i=0;i<Datos.etnia.length;i++){
+                        
+                       $("#etnia").append('<h4>Etnia</h4><h7> Total de defunciones corespondientes a la etnia de la madre</h7>');
+                         $("#causa").append('<h4>Causa de la defuncion fetal</h4><h7> Total de defunciones corespondientes a las causas de las defunciones fetales</h7>');
+                         $("#inst").append('   <h4>Nivel Instruccion de la madre</h4><h7> Total de defunciones corespondientes al nivel de instruccion de la madre</h7>');
+                         $("#Provincia").append('  <h4>Provincia</h4><h7> Total de defunciones corespondientes a la provincia de la defuncion</h7>');
+                         for(i=0;i<Datos.etnia.length;i++){
                            
                             $("#etnia").append('<p>'+Datos.etnia[i]._id+'                  |      Total:     |' + Datos.etnia[i].total+ '</p>');
                         }

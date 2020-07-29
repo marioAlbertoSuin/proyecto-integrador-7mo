@@ -3,10 +3,19 @@
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
  
-        <div class="jumbotron">
-        <img class="mr-3" src="/img/grafica1.png" alt="" width="48" height="48">
-       <h1>Graficas refrentes a las defunciones fetales</h1>
-      </div>
+
+       
+
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading">SIPARDFE <span class="text-muted">Estadística.</span></h2>
+
+          </div>
+          <div class="col-md-5">
+            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto"  src="/img/grafica1.png">
+          </div>
+        </div>
+ <hr class="featurette-divider">
      <input type="hidden" id="parametros" value="{{parametros}}">
 
     <table
@@ -17,6 +26,9 @@
           <select  id="año">
             <option value=2016>2016</option>
             <option value=2017>2017</option>
+            <option value=2018>2018</option>
+            <option value=2019>2019</option>
+            <option value=2020>2020</option>
           </select>
           <font style="vertical-align: inherit;">Mes</font>
           <select  id="mes">
@@ -101,7 +113,7 @@
       <div id="container3"></div>
     </figure>
   </div>
-
+<hr class="featurette-divider">
    
      <div class="col-md-6">
      <figure class="highcharts-figure">

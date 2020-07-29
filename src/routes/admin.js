@@ -181,4 +181,126 @@ router.post('/admin/reportes', isAuthenticated, async(req, res) => {
  
 });
 
-module.exports = router
+
+
+//PREDICCIONES
+//********************************************************************
+//********************************************************************
+
+
+ 
+const axios = require('axios');
+
+
+router.post('/admin/obtener/prediccion', async(req, res) => {
+    let parametro=req.body.parametro ;
+    const resp = await axios.get(`https://rest-defunciones.herokuapp.com/?fecha=${parametro}`);
+    if (parametro=="anio"){
+        let año=req.body.año;
+        let indeterminados = resp.data.datosIndeterminado.filter(item=>{
+            var años =new Date(item.Date);
+            var yyyy = años.getFullYear();
+            return yyyy==año;
+        });
+        let mujer = resp.data.datosMujer.filter(item=>{
+            var años =new Date(item.Date);
+            var yyyy = años.getFullYear();
+            return yyyy==año;
+        });
+        let hombre = resp.data.datosMasculino.filter(item=>{
+            var años =new Date(item.Date);
+            var yyyy = años.getFullYear();
+            return yyyy==año;
+        });
+        let total = resp.data.total.filter(item=>{
+            var años =new Date(item.Date);
+            var yyyy = años.getFullYear();
+            return yyyy==año;
+        });
+        res.send({total,hombre,mujer,indeterminados});
+    }else if(parametro=="mes"){
+        let año=req.body.año;
+        let mes=req.body.mes;
+        let indeterminados = resp.data.datosIndeterminado.filter(item=>{
+            var años =new Date(item.Date);
+            var yyyy = años.getFullYear();
+            var mm = años.getMonth()+1;
+            let cond= yyyy==año && mm==mes;  
+            return cond;
+        });
+        let mujer = resp.data.datosMujer.filter(item=>{
+            var años =new Date(item.Date);
+            var yyyy = años.getFullYear();
+            var mm = años.getMonth()+1;
+            let cond= yyyy==año && mm==mes; 
+            return cond;
+        });
+        let hombre = resp.data.datosMasculino.filter(item=>{
+            var años =new Date(item.Date);
+            var yyyy = años.getFullYear();
+            var mm = años.getMonth()+1; 
+            let cond= yyyy==año && mm==mes;
+            return cond;
+        });
+        let total = resp.data.total.filter(item=>{
+            var años =new Date(item.Date);
+            var yyyy = años.getFullYear();
+            var mm = años.getMonth()+1;
+            let cond= yyyy==año && mm==mes; 
+            return cond
+        });
+        res.send({total,hombre,mujer,indeterminados});
+    }else{
+
+        let dia=req.body.dia;
+        ////////////////////////////////
+        
+        var dias =new Date(dia);
+       
+        var d = dias.getDate(); 
+        var m = dias.getMonth()+1; 
+        var yy = dias.getFullYear();
+               
+        let indeterminados = resp.data.datosIndeterminado.filter(item=>{
+            var años =new Date(item.Date);
+            var yyyy = años.getFullYear();
+            var mm = años.getMonth()+1;
+            var dd = años.getDate();
+
+            let cond= yyyy==yy && mm==m && dd==d;  
+            return cond;
+        });
+        let mujer = resp.data.datosMujer.filter(item=>{
+            var años =new Date(item.Date);
+            var yyyy = años.getFullYear();
+            var mm = años.getMonth()+1;
+            var dd = años.getDate();
+            let cond= yyyy==yy && mm==m && dd==d;  
+            return cond;
+        });
+        let hombre = resp.data.datosMasculino.filter(item=>{
+            var años =new Date(item.Date);
+            var yyyy = años.getFullYear();
+            var mm = años.getMonth()+1; 
+            var dd = años.getDate();
+            let cond= yyyy==yy && mm==m && dd==d;  
+            return cond;
+        });
+        let total = resp.data.total.filter(item=>{
+            var años =new Date(item.Date);
+            var yyyy = años.getFullYear();
+            var mm = años.getMonth()+1;
+            var dd = años.getDate();
+            let cond= yyyy==yy && mm==m && dd==d;   
+            return cond
+        });
+        res.send({total,hombre,mujer,indeterminados});
+
+
+    }
+    //console.log(JSON.stringify(resp.data.datosIndeterminado));
+    //res.send(JSON.stringify(resp.total[0]));
+    
+}); 
+
+module.exports = router 
