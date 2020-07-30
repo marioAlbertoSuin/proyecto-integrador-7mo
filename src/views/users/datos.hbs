@@ -1,0 +1,130 @@
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading">SIPARDFE <span class="text-muted">Datos</span></h2>
+            
+          </div>
+          <div class="col-md-5">
+            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/400x400/auto"  src="/img/datos-all-menus.png">
+          </div>
+        </div>
+        <hr class="featurette-divider">
+       
+    <h3 class="featurette-divider">Top 5 Causas de la defunció</h3>
+       
+
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th>Total</th>
+                  <th>Causa</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                
+                  {{#each causa}}
+                  <tr>
+                  <td>{{total}}</td>
+                
+                  <td>{{_id}}</td>
+                   </tr>
+                  {{/each}}
+
+              </tbody>
+            </table>
+          </div>
+       
+
+
+
+<hr class="featurette-divider">
+       
+    <h3 class="featurette-divider">Top 5 provincias con mayor ocurrencia</h3>
+
+      
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th>Total</th>
+                  <th>Provincia del fallecimiento</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                 {{#each provi}}
+                <tr>
+                <td >{{total}}</td>
+                  
+                  <td>{{_id}}</td>
+                </tr>
+                  {{/each}}
+       
+              </tbody>
+            </table>
+          </div>
+     
+
+
+<hr class="featurette-divider">
+       
+    <h3 class="featurette-divider">Top 5 etnias de la madre con mas defunciónes</h3>
+
+      
+      
+
+        <div class="table-responsive">
+            <table class="table table-striped table-sm"  >
+              <thead>
+                <tr>
+                  <th>Total</th>
+                  <th>Etnia de la madre</th>
+
+                </tr>
+              </thead>           
+              <tbody>
+                 {{#each etnia}}
+                <tr>
+                   <td style="height: 20px;">{{total}}</td>
+                 
+                  <td style="height: 20px;">{{_id}}</td>
+       
+                </tr>
+                  {{/each}} 
+       
+              </tbody>
+            </table>
+          </div>
+       
+
+       <hr class="featurette-divider">
+       
+    <h3 class="featurette-divider">Top 5 lugares de ocurrencia</h3>
+
+              
+
+        <div class="table-responsive">
+            <table style="width: 100%;" class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th>Total</th>
+                  <th>Lugar de ocurrencia</th>
+
+                </tr>
+              </thead>             
+             <tbody>
+               {{#each lugar_ocur}}
+                <tr>
+
+                   <td style="height: 20px;">{{total}}</td>
+                  
+                  <td style="height: 20px;" >{{_id}}</td>
+                </tr>
+                {{/each}} 
+       
+         </tbody>
+
+            </table>
+          </div>
+       

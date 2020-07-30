@@ -12,17 +12,22 @@
         
       </div>
       <div class="card-body">
+        <button class="btn-primary" onclick="buscarMadre()">Buscar Madre por cedula </button>
         <form action="/defunciones/registro" method="POST">
         
 
 
+
         <div class="form-group">
+          <input type="text"  name="sem_gest" placeholder="Busque madre por cedula" id="ced"><label >    o por    </label>
               <label >Madre</label>
-            <select name="Codmadre" id="Codmadre">
-                <option value="--">Mujer</option> 
-                
-            
+            <select name="Codmadre" id="Codmadre" >
+                <option value="--">--</option> 
+  
             </select>
+            
+             
+             
           </div>
 
 

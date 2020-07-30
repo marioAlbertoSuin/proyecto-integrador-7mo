@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 
 const MadreSchema = new Schema({
         nom_mad:{type:String},
+        ced:{type:String},
         nac_mad : {type:String},
         nom_pais : {type:String},
         anio_mad : {type:Number},

@@ -53,11 +53,42 @@ DETERMINANDO UN MODELO QUE PRONOSTICA LAS POSIBLES DEFUNCIONES FETALES QUE SE PU
           </div>
         </div>
 
-        <hr class="featurette-divider">
+      
 
 
 
 
+ <hr class="featurette-divider">
+       
+    <h3 class="featurette-divider">Top 10 principales Causas de fallecimiento</h3>
+
+
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th>Total</th>
+                  <th>Causa</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                
+                  {{#each causa}}
+                  <tr>
+                  <td>{{total}}</td>
+                
+                  <td>{{_id}}</td>
+                   </tr>
+                  {{/each}}
+
+              </tbody>
+            </table>
+          </div>
+       
+
+
+<hr class="featurette-divider">
       <div class="album py-5 bg-light">
         <div class="container">
 
@@ -124,5 +155,14 @@ DETERMINANDO UN MODELO QUE PRONOSTICA LAS POSIBLES DEFUNCIONES FETALES QUE SE PU
           </div>
         </div>
       </div>
+
+   
+
+
+  <hr class="featurette-divider">
+
+
+       
+
 
    

@@ -364,6 +364,9 @@ function GenerarReporte(){
                       if(Datos.etnia.length==0){
                         alert("no hay datos para esos valores")
                       }else{
+                        let total=0;
+                        for(i=0;i<Datos.etnia.length;i++){total=Datos.etnia[i].total+total}
+                        $("#etnia").append('<h3>Número total de defunciones:  '+total+'</h3>');                        
 
                          $("#etnia").append('<h4>Etnia</h4><h7> Total de defunciones corespondientes a la etnia de la madre</h7>');
                          $("#causa").append('<h4>Causa de la defuncion fetal</h4><h7> Total de defunciones corespondientes a las causas de las defunciones fetales</h7>');
@@ -410,6 +413,9 @@ function GenerarReporte(){
                       if(Datos.etnia.length==0){
                         alert("no hay datos para esos valores")
                       }else{
+                        let total=0;
+                        for(i=0;i<Datos.etnia.length;i++){total=Datos.etnia[i].total+total}
+                        $("#etnia").append('<h3>Número total de defunciones:  '+total+'</h3>');        
                          $("#etnia").append('<h4>Etnia</h4><h7> Total de defunciones corespondientes a la etnia de la madre</h7>');
                          $("#causa").append('<h4>Causa de la defuncion fetal</h4><h7> Total de defunciones corespondientes a las causas de las defunciones fetales</h7>');
                          $("#inst").append('   <h4>Nivel Instruccion de la madre</h4><h7> Total de defunciones corespondientes al nivel de instruccion de la madre</h7>');
@@ -454,7 +460,9 @@ function GenerarReporte(){
                       if(Datos.etnia.length==0){
                         alert("no hay datos para esos valores")
                       }else{
-                        
+                        let total=0;
+                        for(i=0;i<Datos.etnia.length;i++){total=Datos.etnia[i].total+total}
+                        $("#etnia").append('<h3>Número total de defunciones:  '+total+'</h3>');  
                        $("#etnia").append('<h4>Etnia</h4><h7> Total de defunciones corespondientes a la etnia de la madre</h7>');
                          $("#causa").append('<h4>Causa de la defuncion fetal</h4><h7> Total de defunciones corespondientes a las causas de las defunciones fetales</h7>');
                          $("#inst").append('   <h4>Nivel Instruccion de la madre</h4><h7> Total de defunciones corespondientes al nivel de instruccion de la madre</h7>');

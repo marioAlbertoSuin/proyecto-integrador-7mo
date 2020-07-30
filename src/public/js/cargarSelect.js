@@ -1,7 +1,30 @@
 ////////////////////////////////////////////////////////////////////////////
 //madre llenar
 /////////////////////////////////////////////////////////////////////////////
-
+function buscarMadre(){
+    let ced=document.getElementById("ced").value;
+    
+    $.ajax({
+        url: '/defunciones/registro/buscar-madre',
+        data: {ced},
+        type: 'POST',
+    
+        success: function(response) {
+         var Madre=response;
+         if(Madre==0){
+             alert("Ingrese una cedula valida");
+         }else{
+            $("#Codmadre").empty();
+            $("#Codmadre").append('<option value="'+Madre._id+'">'+Madre.nom_mad+'</option> ');
+   
+         }
+          
+  
+    
+    
+        }
+    }); 
+}
 
 
 document.addEventListener("DOMContentLoaded", function(){
